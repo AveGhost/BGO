@@ -21,7 +21,7 @@ const Navigation = () => {
         }
     ]
     return (
-        <nav className="bg-zinc-800 p-3">
+        <nav className="bg-zinc-800 p-3 sticky top-0 z-50 w-full">
             <div className="container mx-auto flex justify-between items-center">
                 <Logo />
                 <ul className="flex items-center gap-8">
