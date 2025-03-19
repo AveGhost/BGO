@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Rubik} from "next/font/google";
 import "./globals.css";
+import Navigation from "./components/navigation/navigation.component";
 
 
 const rubik = Rubik({
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body
         className={`${rubik.variable} antialiased`}
       >
+        <Navigation />
         {children}
       </body>
     </html>
