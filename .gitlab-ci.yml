@@ -6,6 +6,6 @@ build:
   image: node:21-alpine
   script:
     - echo "Installing packages"
-    - npm run install
+    - npm install
     - echo "Running app build"
     - npm run build
