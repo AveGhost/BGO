@@ -1,0 +1,11 @@
+stages:
+  - build
+
+build:
+  stage: build
+  image: node:21-alpine
+  script:
+    - echo "Installing packages"
+    - npm run install
+    - echo "Running app build"
+    - npm run build
