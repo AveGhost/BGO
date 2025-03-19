@@ -11,7 +11,7 @@ interface AuthorCardProps {
 
 const AuthorCard = ({avatar,name,role,description,date}: AuthorCardProps) => {
     return (
-        <div className="flex gap-4 items-center p-4">
+        <div className="flex gap-4 items-start p-4">
             {avatar ?
             <Image
                 src={avatar}
