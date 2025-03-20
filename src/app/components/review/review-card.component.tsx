@@ -2,6 +2,7 @@ import Image from "next/image"
 import AuthorCard from "../author/author-card.component"
 import Link from "next/link"
 import Rating from "./rating.component"
+import Category from "./category.component"
 
 interface ReviewCardProps {
    rate: number
@@ -31,7 +32,7 @@ const ReviewCard = ({rate, image, category, title, description, href, author}: R
                 />
             </Link>
             <div className="flex flex-col gap-4 p-4">
-                <span className="text-sm">{category}</span>
+                <Category category={category} />
                 <h2 className="text-xl font-medium"><Link href={href ? href : title}>{title}</Link></h2>
                 <p className="text-zinc-300 font-light">{description}</p>
             </div>
