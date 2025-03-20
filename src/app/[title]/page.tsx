@@ -2,6 +2,7 @@ import Image from "next/image"
 import ImageReview from "../components/review/image-review.component"
 import SummaryCard from "../components/review/summary-card.component"
 import AuthorCard from "../components/author/author-card.component"
+import RatingTable from "../components/review/rating-table.component"
 
 const SinglePage = () => {
     return (
@@ -28,6 +29,7 @@ const SinglePage = () => {
             <p>Jedyne wysokie obiekty XVI-wiecznej japońskiej aglomeracji to świątynie oraz zamki. Tutaj jednak daje o sobie znać azjatyckie zamiłowanie do porządku oraz zasad. Każda warownia wygląda jak klon poprzedniej, ich mury oraz wieże są do siebie bliźniaczo podobne. Zdobywając jeden zamek to trochę tak, jakbyś zdobył je wszystkie. Ubisoft, trzymając się realizmu historycznego, zabił połowę frajdy z parkouru.</p>
             <p>Po prostu nie ma na co się wspinać. Większość czasu spędzicie w siodle, galopując od wioski do wioski. Około jedna trzecia wszystkich punktów widokowych to drzewo na szczycie wzniesienia, co samo w sobie jest wymowne, zwłaszcza w kontekście takich odsłon jak Unity czy Syndicate. Nawet Odyssey, krytykowane za niską i powtarzalną zabudowę, wydaje się na tle Shadows zróżnicowane środowiskowo.</p>
             <SummaryCard rate={10} />
+            <RatingTable />
             <div className="bg-zinc-800 rounded-lg">
                 <AuthorCard avatar="/avatar.png" name="AveGhost" role="Redaktor" description="Specjalista od Groznawstwa, który nie stroni od swoich ulubionych tytułów. Rzadko się do tego przyznaje, ale ma prawie 2000 godzin na liczniku w Path of Exile. Pozostałe dwa tytuły w jego świętej trójcy to Assassin’s Creed: Origins oraz Final Fantasy XV. Miłośnik RPG i hack’n’slash, dla którego najważniejsza jest dobra historia, a ściany tekstu są plusem. Po godzinach pisze do szuflady, pije niepokojąco duże ilości kawy i często wraca do swoich ulubionych seriali (o Hannibalu prawdopodobnie gadałby nawet w trumnie)."/>
             </div>
