@@ -24,13 +24,12 @@ const ReviewCard = ({rate, image, category, title, description, href, author, is
         isGrid ?
         <article className="flex flex-col h-full relative border-1 border-zinc-600 rounded-lg group transition-all duration-300">
             <Rating rate={rate} classes="absolute -top-6 right-0 left-0" />
-            <Link href={href ? href : title} className="relative rounded-t-lg overflow-hidden after:bg-gradient-to-b after:from-zinc-800 after:to-transparent after:absolute after:inset-0 after:z-0 after:rounded-t-lg">
+            <Link href={href ? href : title} className="relative rounded-t-lg h-[250px] overflow-hidden after:bg-gradient-to-b after:from-zinc-800 after:to-transparent after:absolute after:inset-0 after:z-0 after:rounded-t-lg">
                 <Image
                     src={image}
                     alt="review"
-                    width={372}
-                    height={372}
-                    className="rounded-t-lg transition-transform duration-300 group-hover:scale-110"
+                    fill
+                    className="rounded-t-lg transition-transform duration-300 group-hover:scale-110 object-cover"
                 />
             </Link>
             <div className="flex flex-col gap-4 p-4">

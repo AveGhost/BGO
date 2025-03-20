@@ -16,8 +16,8 @@ const ListingWrapper = () => {
     }
 
     return (
-        <div className={`grid ${isGrid ? "grid-cols-4" : "grid-cols-1"} gap-x-4 gap-y-8 py-8 container mx-auto`}>
-            <div className={`${isGrid ? "col-span-4" : "col-span-1"} flex gap-4 mb-6`}>
+        <div className={`grid ${isGrid ? "xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1" : "grid-cols-1"} gap-x-4 gap-y-8 py-8 px-4 container mx-auto`}>
+            <div className={`${isGrid ? "xl:col-span-4 md:col-span-2 sm:col-span-1" : "col-span-1"} flex gap-4 mb-6`}>
                 <Icon icon="flowbite:grid-solid" width="35" height="35" className={`border-1 border-zinc-600 p-1 cursor-pointer hover:bg-zinc-600 transition-colors duration-300 rounded-lg ${isGrid ? "bg-zinc-600" : ""}`} onClick={toggleGridLayout} />
                 <Icon icon="solar:list-linear" width="35" height="35" className={`border-1 border-zinc-600 p-1 cursor-pointer hover:bg-zinc-600 transition-colors duration-300 rounded-lg ${!isGrid ? "bg-zinc-600" : ""}`} onClick={toggleListLayout} />
             </div>
