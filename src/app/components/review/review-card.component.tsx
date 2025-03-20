@@ -28,8 +28,8 @@ const ReviewCard = ({rate, image, category, title, description, href, author, is
                 <Image
                     src={image}
                     alt="review"
-                    width={360}
-                    height={360}
+                    width={372}
+                    height={372}
                     className="rounded-t-lg transition-transform duration-300 group-hover:scale-110"
                 />
             </Link>
@@ -42,7 +42,7 @@ const ReviewCard = ({rate, image, category, title, description, href, author, is
         </article>
         : <article className="grid grid-cols-[600px_1fr] h-full relative border-1 border-zinc-600 rounded-lg group transition-all duration-300">
             <Rating rate={rate} classes="absolute -top-6 -left-5" />
-            <Link href={href ? href : title} className="relative rounded-tl-lg rounded-bl-lg overflow-hidden h-full">
+            <Link href={href ? href : title} className="relative rounded-tl-lg rounded-bl-lg overflow-hidden h-full after:bg-gradient-to-r after:from-zinc-800 after:to-transparent after:absolute after:inset-0 after:z-0 after:rounded-t-lg">
                 <Image
                     src={image}
                     alt="review"
