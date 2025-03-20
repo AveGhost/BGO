@@ -38,7 +38,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  animation-duration: 0.7s;
+  animation-duration: 0.3s;
   animation-name: fadeInDown;
   animation-timing-function: ease-out;
 }
