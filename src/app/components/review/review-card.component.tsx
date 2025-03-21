@@ -39,15 +39,14 @@ const ReviewCard = ({rate, image, category, title, description, href, author, is
             </div>
             <AuthorCard avatar={author.avatar} name={author.name} date={author.date} />
         </article>
-        : <article className="grid grid-cols-[600px_1fr] h-full relative border-1 border-zinc-600 rounded-lg group transition-all duration-300">
-            <Rating rate={rate} classes="absolute -top-6 -left-5" />
-            <Link href={href ? href : title} className="relative rounded-tl-lg rounded-bl-lg overflow-hidden h-full after:bg-gradient-to-r after:from-zinc-800 after:to-transparent after:absolute after:inset-0 after:z-0 after:rounded-t-lg">
+        : <article className="grid xl:grid-cols-[600px_1fr] md:grid-cols-[350px_1fr] h-full relative border-1 border-zinc-600 rounded-lg group transition-all duration-300">
+            <Rating rate={rate} classes="absolute -top-6 md:-left-5 md:right-auto right-0 left-0" />
+            <Link href={href ? href : title} className="relative h-[250px] md:h-[335px] lg:h-[270px] rounded-tl-lg rounded-tr-lg md:rounded-tr-none md:rounded-bl-lg overflow-hidden after:bg-gradient-to-b after:from-zinc-800 md:after:bg-gradient-to-r md:after:from-zinc-800 after:to-transparent after:absolute after:inset-0 after:z-0 after:rounded-t-lg">
                 <Image
                     src={image}
                     alt="review"
-                    width={600}
-                    height={600}
-                    className="rounded-tl-lg rounded-bl-lg transition-transform duration-300 group-hover:scale-110"
+                    fill
+                    className="rounded-tl-lg rounded-tr-lg md:rounded-tr-none md:rounded-bl-lg transition-transform duration-300 group-hover:scale-110 object-cover"
                 />
             </Link>
             <div className="flex flex-col">
