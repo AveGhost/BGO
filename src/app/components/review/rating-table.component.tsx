@@ -1,5 +1,4 @@
 import RatingTableElement from "./rating-table-element.component"
-import { Icon } from "@iconify/react/dist/iconify.js"
 
 const RatingTable = () => {
     const pluses = [
