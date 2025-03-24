@@ -1,5 +1,4 @@
 import Image from "next/image"
-import {Icon} from '@iconify/react'
 
 interface AuthorCardProps {
     avatar?: string
@@ -11,17 +10,16 @@ interface AuthorCardProps {
 
 const AuthorCard = ({avatar,name,role,description,date}: AuthorCardProps) => {
     return (
-        <div className="flex gap-4 items-start p-4">
-            {avatar ?
+        <div className="flex gap-4 items-start p-4 mt-auto">
+            {avatar &&
             <Image
                 src={avatar}
                 alt="author"
                 width={48}
                 height={48}
                 className="rounded-full"
-            />
-            : <Icon icon="qlementine-icons:user-24" width="48" height="48" />}
-            <div className="flex flex-col gap-1">
+            />}
+            <div className={`flex gap-1 ${avatar ? "flex-col" : "justify-between items-center w-full"}`}>
                 {name &&<h3>{name}</h3>}
                 {date &&<span className="text-sm text-zinc-400">{date}</span>}
                 {role && <span className="text-sm text-zinc-400">{role}</span>}

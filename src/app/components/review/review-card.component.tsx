@@ -34,8 +34,8 @@ const ReviewCard = ({rate, image, category, title, description, href, author, is
             </Link>
             <div className="flex flex-col gap-4 p-4">
                 <Category category={category} />
-                <h2 className="text-xl font-medium"><Link href={href ? href : title}>{title}</Link></h2>
-                <p className="text-zinc-300 font-light">{description}</p>
+                <h2 className="text-3xl font-medium"><Link href={href ? href : title}>{title}</Link></h2>
+                <p className="text-zinc-300 font-light text-sm">{description}</p>
             </div>
             <AuthorCard avatar={author.avatar} name={author.name} date={author.date} />
         </article>
@@ -52,8 +52,8 @@ const ReviewCard = ({rate, image, category, title, description, href, author, is
             <div className="flex flex-col">
                 <div className="flex flex-col gap-4 p-4">
                     <Category category={category} />
-                    <h2 className="text-xl font-medium"><Link href={href ? href : title}>{title}</Link></h2>
-                    <p className="text-zinc-300 font-light">{description}</p>
+                    <h2 className="text-3xl font-medium"><Link href={href ? href : title}>{title}</Link></h2>
+                    <p className="text-zinc-300 font-light text-sm">{description}</p>
                 </div>
                 <AuthorCard avatar={author.avatar} name={author.name} date={author.date} />
             </div>
