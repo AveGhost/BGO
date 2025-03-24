@@ -22,10 +22,10 @@ const AuthorCard = ({avatar,name,role,description,date}: AuthorCardProps) => {
             />
             : <Icon icon="qlementine-icons:user-24" width="48" height="48" />}
             <div className="flex flex-col gap-1">
-                <h3>{name}</h3>
-                <span className="text-sm text-zinc-400">{date}</span>
-                <span className="text-sm text-zinc-400">{role}</span>
-                <p className="text-sm text-zinc-300">{description}</p>
+                {name &&<h3>{name}</h3>}
+                {date &&<span className="text-sm text-zinc-400">{date}</span>}
+                {role && <span className="text-sm text-zinc-400">{role}</span>}
+                {description &&<p className="text-sm text-zinc-300">{description}</p>}
             </div>
         </div>
     )
