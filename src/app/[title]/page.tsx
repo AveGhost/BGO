@@ -8,8 +8,8 @@ const SinglePage = () => {
     return (
         <section className="py-6 container grid grid-cols-[180px_1fr] mx-auto">
             <div className="col-2">
-                <h1 className="text-6xl mb-2 max-w-[800px]">Assasins Creed Shadows - Ubisoft popierdoliło</h1>
-                <div className="flex flex-col gap-2 text-sm">
+                <h1 className="text-6xl mb-2 max-w-[800px] font-medium">Assasins Creed Shadows - Ubisoft popierdoliło</h1>
+                <div className="flex flex-col text-sm">
                     <span className="text-zinc-400">Opublikowano: <strong>07.11.2024</strong></span>
                     <span className="text-zinc-400">Autor: <strong>AveGhost</strong></span>
                 </div>
