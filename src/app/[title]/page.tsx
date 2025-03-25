@@ -19,7 +19,7 @@ const SinglePage = () => {
                 alt="placeholder"
                 width={1200}
                 height={1000}
-                className="rounded-lg mx-auto my-4 col-span-2"
+                className="rounded-lg my-4 col-2"
             />
             <div className="col-2 max-w-[800px]">
                 <p className="mb-4">Mam specjalną umiejętność, z gatunku niechcianych i nieprzydatnych. Jedną recenzją potrafię bowiem rozczarować zarówno hejterów trzymających kciuki za porażkę Shadows, jak również fanów Assassin’s Creed liczących na nowy, wspaniały rozdział serii. Nowa gra nie spełni oczekiwań żadnej z tych zwaśnionych grup.</p>
