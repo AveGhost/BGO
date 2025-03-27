@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const handleRegister = async (e: any) => {
+export const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log('working')
     e.preventDefault();
     try {
