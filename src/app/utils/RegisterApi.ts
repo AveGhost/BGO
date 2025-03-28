@@ -1,23 +1,41 @@
-import axios from 'axios';
+import api from "../api/api";
 
-export const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log('working')
-    e.preventDefault();
+interface RegisterData {
+    email: string;
+    password: string;
+    password2: string;
+    first_name: string;
+    last_name: string;
+    username: string;
+}
+
+export default async function handleRegister(data: RegisterData): Promise<string | null> {
+    if(!data.email || !data.password || !data.password2 || !data.first_name || !data.last_name || !data.username) {
+        return "Wypełnij wszystkie pola";
+    }
+
+    if(data.password !== data.password2) {
+        return "Hasła nie zgadzają się";
+    }
+
+    if(data.password.length < 8) {
+        return "Hasło jest za krótkie";
+    }
+
+    if(!data.email.includes("@")) {
+        return "Niepoprawny adres e-mail";
+    }
+
     try {
-        const res = await axios.post(`https://api-itnh.onrender.com/auth/register`, {
-            email: "aveghost35923@gmail.com",
-            password: "test",
-            first_name: "test",
-            last_name: "test2"
-        }, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
+        const response = await api.post("/auth/register", data);
+        return null;
+    } catch (error: any) {
+        console.error(error);
+        
+        if(error.response && error.response.data && error.response.data.message) {
+            return error.response.data.message;
+        }
 
-        console.log(res.data);
-    } catch (err) {
-        console.error(err);
+        return 'Wystąpił błąd podczas rejestacji';
     }
 };
