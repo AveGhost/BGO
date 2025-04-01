@@ -1,4 +1,8 @@
-import Image from "next/image"
+import AuthorAvatar from "./author-avatar.component"
+import AuthorName from "./author-name.component"
+import AuthorDescription from "./author-description.component"
+import AuthorRole from "./author-role.component"
+import Date from "../other/date.component"
 
 interface AuthorCardProps {
     avatar?: string
@@ -11,19 +15,12 @@ interface AuthorCardProps {
 const AuthorCard = ({avatar,name,role,description,date}: AuthorCardProps) => {
     return (
         <div className="flex gap-4 items-start p-4 mt-auto">
-            {avatar &&
-            <Image
-                src={avatar}
-                alt="author"
-                width={48}
-                height={48}
-                className="rounded-full"
-            />}
+            {avatar && <AuthorAvatar avatar={avatar}/>}
             <div className={`flex gap-1 ${avatar ? "flex-col" : "justify-between items-center w-full"}`}>
-                {name &&<h3 className="text-sm">{name}</h3>}
-                {date &&<span className="text-sm text-zinc-400">{date}</span>}
-                {role && <span className="text-sm text-zinc-400">{role}</span>}
-                {description &&<p className="text-sm text-zinc-300">{description}</p>}
+                {name && <AuthorName name={name}/>}
+                {date && <Date date={date}/>}
+                {role && <AuthorRole role={role}/>}
+                {description && <AuthorDescription description={description}/>}
             </div>
         </div>
     )
