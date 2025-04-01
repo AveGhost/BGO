@@ -5,20 +5,33 @@ import FromInput from "./form-input.component"
 import handleLogin from "@/app/utils/LoginApi"
 import FormButton from "./form-button.component"
 import FormWrapper from "./form-wrapper.component"
+import { useContext } from "react"
+import { AuthContext } from "@/app/context/AuthProvider"
+import { redirect } from "next/navigation"
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({email: '', password: ''})
     const [isDataValid, setIsDataValid] = useState<string | null>(null)
-    
+    const { setToken } = useContext(AuthContext)!
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+        if(isDataValid) {
+            setIsDataValid(null)
+        }
     };
 
     const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const errorMessage = await handleLogin(formData);
-        setIsDataValid(errorMessage);
+        const {token, error} = await handleLogin(formData)
+        if(token) {
+            const thisToken = token;
+            setToken(thisToken);
+            redirect('/');
+        }
+        setFormData({email: '', password: ''})
+        setIsDataValid(error || null);
     }
     return (
         <div className="form w-full max-w-[450px] min-h-[350px] p-4">
