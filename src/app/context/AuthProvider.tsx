@@ -32,7 +32,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             if(!token) return;
             try {
                 const response = await api.get("/auth/me");
-                console.log(response)
                 setUser(response.data);
             } catch (error) {
                 console.error(error);

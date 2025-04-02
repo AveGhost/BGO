@@ -26,10 +26,8 @@ export default function RootLayout({
         className={`${rubik.variable} antialiased`}
       >
         <AuthProvider>
-
             <Navigation />
             {children}
-
         </AuthProvider>
       </body>
     </html>
