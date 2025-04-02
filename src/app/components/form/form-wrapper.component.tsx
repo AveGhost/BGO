@@ -1,4 +1,4 @@
-import ErrorMessage from "./error-message.component"
+import ErrorMessage from "../login-register/error-message.component";
 
 export interface FormWrapperProps {
     children: React.ReactNode;
