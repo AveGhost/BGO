@@ -7,7 +7,7 @@ import Category from "./category.component"
 interface ReviewCardProps {
    rate: number
    image: string
-   category: string
+   category?: string
    title: string
    description: string
    href?: string

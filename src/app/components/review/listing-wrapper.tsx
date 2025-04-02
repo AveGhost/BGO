@@ -4,24 +4,39 @@ import { useEffect, useState } from "react"
 import ReviewCard from "./review-card.component"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import getNews from "@/app/utils/news/GetNews"
-import { Cabin_Sketch } from "next/font/google"
+import { BeatLoader } from "react-spinners"
+
+interface newsTypes {
+    id: number
+    title: string
+    description: string
+    image: string
+    href: string
+    publishDate?: string
+    score: number
+    summaryContent: string
+    author: {
+        firstName: string
+        avatar?: string
+    }
+}
 
 const ListingWrapper = () => {
     const [isGrid, setIsGrid] = useState(true)
-    const [news,setNews] = useState([])
+    const [news,setNews] = useState<newsTypes[]>([])
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
         const fetchNews = async () => {
             try {
                 const news = await getNews()
-                console.log(news)
                 setNews(news.content)
+                setIsLoaded(true)
             } catch (error) {
                 console.error(error)
             }
         }
         fetchNews()
-        console.log(news)
     },[])
 
     const toggleGridLayout = () => {
@@ -38,8 +53,9 @@ const ListingWrapper = () => {
                 <Icon icon="flowbite:grid-solid" width="35" height="35" className={`border-1 border-zinc-600 p-1 cursor-pointer hover:bg-zinc-600 transition-colors duration-300 rounded-lg ${isGrid ? "bg-zinc-600" : ""}`} onClick={toggleGridLayout} />
                 <Icon icon="solar:list-linear" width="35" height="35" className={`border-1 border-zinc-600 p-1 cursor-pointer hover:bg-zinc-600 transition-colors duration-300 rounded-lg ${!isGrid ? "bg-zinc-600" : ""}`} onClick={toggleListLayout} />
             </div>
+            {!isLoaded && <div className="flex justify-center items-center col-span-4"><BeatLoader color="#fff" size={30} /></div>}
             {news && news.map((item) => (
-                <ReviewCard key={item.id} rate={item.score} isGrid={isGrid} image="/placeholder-image.webp" title={item.title} description={item.content[0].content} author={{name: item.author.firstName, date: item.publishDate}}/>
+                <ReviewCard key={item.id} href={`/article/${item.id}`} rate={item.score} isGrid={isGrid} image="/placeholder-image.webp" title={item.title} description={item.summaryContent} author={{name: item.author.firstName, date: item.publishDate}}/>
             ))}
         </div>
     )
