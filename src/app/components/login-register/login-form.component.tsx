@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from "react"
-import FromInput from "./form-input.component"
+import FormInput from "../form/form-input.component"
 import handleLogin from "@/app/utils/LoginApi"
-import FormButton from "./form-button.component"
-import FormWrapper from "./form-wrapper.component"
+import FormButton from "../form/form-button.component"
+import FormWrapper from "../form/form-wrapper.component"
 import { useContext } from "react"
 import { AuthContext } from "@/app/context/AuthProvider"
 import { redirect } from "next/navigation"
@@ -38,8 +38,8 @@ const LoginForm = () => {
             <div className="flex flex-col gap-4 justify-center items-center h-full">
                 <h1 className="text-2xl text-center mb-6">Logowanie</h1>
                 <FormWrapper onSubmit={formSubmit} isDataValid={isDataValid}>
-                    <FromInput icon="majesticons:user-line" type="email" placeholder="Adres e-mail" name="email" value={formData.email} event={handleInputChange} />
-                    <FromInput icon="carbon:password" type="password" placeholder="Hasło" name="password" value={formData.password} event={handleInputChange} />
+                    <FormInput icon="majesticons:user-line" type="email" placeholder="Adres e-mail" name="email" value={formData.email} event={handleInputChange} />
+                    <FormInput icon="carbon:password" type="password" placeholder="Hasło" name="password" value={formData.password} event={handleInputChange} />
                     <FormButton text="Zaloguj się"/>
                 </FormWrapper>
             </div>
