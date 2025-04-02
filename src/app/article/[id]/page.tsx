@@ -1,8 +1,8 @@
 import Image from "next/image"
-import ImageReview from "../components/review/image-review.component"
-import SummaryCard from "../components/review/summary-card.component"
-import AuthorCard from "../components/author/author-card.component"
-import RatingTable from "../components/review/rating-table.component"
+import ImageReview from "../../components/review/image-review.component"
+import SummaryCard from "../../components/review/summary-card.component"
+import AuthorCard from "../../components/author/author-card.component"
+import RatingTable from "../../components/review/rating-table.component"
 
 const SinglePage = () => {
     return (
