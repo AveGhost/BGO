@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import ReviewCard from "./review-card.component"
 import { Icon } from "@iconify/react/dist/iconify.js"
-import getNews from "@/app/utils/news/GetNews"
+import getNewsAll from "@/app/utils/news/GetNewsAll"
 import { BeatLoader } from "react-spinners"
 
 interface newsTypes {
@@ -29,7 +29,7 @@ const ListingWrapper = () => {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const news = await getNews()
+                const news = await getNewsAll()
                 setNews(news.content)
                 setIsLoaded(true)
             } catch (error) {
