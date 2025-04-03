@@ -1,8 +1,8 @@
 import api from "@/app/api/api";
 
-export default async function getNews() {
+export default async function getNews({id}: {id: number}) {
     try {
-        const response = await api.get('/news', {});
+        const response = await api.get(`/news/${id}`, {});
         return response.data;
     } catch (error) {
         console.error(error);

@@ -8,7 +8,6 @@ interface GameData {
     categories: string[];
 }
 export default async function postGame(data: GameData): Promise<{ game?: GameData; error?: string }> {
-    console.log(data)
     try {
         const response = await api.post("/games",{
             title: data.title,
@@ -17,7 +16,6 @@ export default async function postGame(data: GameData): Promise<{ game?: GameDat
             platform: data.platform.toUpperCase(),
             categories: data.categories.map((category) => category.toUpperCase()),
         });
-        console.log(response)
         return { game: response.data };
     } catch (error: any) {
         console.error(error);
