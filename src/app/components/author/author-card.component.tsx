@@ -10,11 +10,12 @@ interface AuthorCardProps {
     role?: string
     description?: string
     date?: string
+    classes?: string
 }
 
-const AuthorCard = ({avatar,name,role,description,date}: AuthorCardProps) => {
+const AuthorCard = ({avatar,name,role,description,date,classes}: AuthorCardProps) => {
     return (
-        <div className="flex gap-4 items-start p-4 mt-auto">
+        <div className={`${classes ? classes : "flex"} gap-4 items-start p-4 mt-auto`}>
             {avatar && <AuthorAvatar avatar={avatar}/>}
             <div className={`flex gap-1 ${avatar ? "flex-col" : "justify-between items-center w-full"}`}>
                 {name && <AuthorName name={name}/>}
