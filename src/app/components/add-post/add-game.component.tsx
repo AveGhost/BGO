@@ -61,8 +61,6 @@ const AddGame = () => {
         if(error) {
             setIsDataValid(error)
         }
-        console.log(formData)
-        console.log(game)
     }
 
     return (
