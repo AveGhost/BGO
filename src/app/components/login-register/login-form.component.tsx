@@ -40,7 +40,7 @@ const LoginForm = () => {
                 <FormWrapper onSubmit={formSubmit} isDataValid={isDataValid}>
                     <FormInput icon="majesticons:user-line" type="email" placeholder="Adres e-mail" name="email" value={formData.email} event={handleInputChange} />
                     <FormInput icon="carbon:password" type="password" placeholder="Hasło" name="password" value={formData.password} event={handleInputChange} />
-                    <FormButton text="Zaloguj się"/>
+                    <FormButton type="submit" text="Zaloguj się"/>
                 </FormWrapper>
             </div>
         </div>

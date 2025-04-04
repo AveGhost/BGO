@@ -31,7 +31,7 @@ const RegisterForm = () => {
                     <FormInput icon="carbon:email" type="email" placeholder="Adres e-mail" name="email" value={formData.email} event={handleInputChange}/>
                     <FormInput icon="carbon:password" type="password" placeholder="Hasło" name="password" value={formData.password} event={handleInputChange}/>
                     <FormInput icon="carbon:password" type="password" placeholder="Powtórz hasło" name="password2" value={formData.password2} event={handleInputChange}/>
-                    <FormButton text="Zarejestruj się" />
+                    <FormButton type="submit" text="Zarejestruj się" />
                 </FormWrapper>
             </div>
         </div>
