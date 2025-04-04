@@ -1,13 +1,13 @@
 interface FormSelectElementProps {
     text: string
-    choosePlatform?: (platform: string) => void
-    chooseCategory?: (category: string) => void
+    singleSelect?: (platform: string, id?: number) => void
+    multiSelect?: (category: string) => void
 }
 
-const FormSelectElement = ({text, choosePlatform, chooseCategory}: FormSelectElementProps) => {
+const FormSelectElement = ({text, singleSelect, multiSelect}: FormSelectElementProps) => {
     const handleOnClick = () => {
-        choosePlatform && choosePlatform(text)
-        chooseCategory && chooseCategory(text)
+        singleSelect && singleSelect(text as string)
+        multiSelect && multiSelect(text as string)
     }
     return (
         <li className="hover:bg-zinc-500 px-4 py-2 w-full cursor-pointer transition-colors duration-300" onClick={handleOnClick}>{text}</li>
