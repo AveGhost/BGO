@@ -21,6 +21,7 @@ import { handleFileSelect, handleDrop, handleDragOver } from "@/app/utils/fileHa
 import { deleteField } from "@/app/utils/fileHandlers/deleteField"
 import { AuthContext } from "@/app/context/AuthProvider"
 import { PostFormData } from "@/app/mixins/PostFormData"
+import { redirect } from "next/navigation"
 
 interface GameProps {
     title: string
@@ -117,9 +118,24 @@ const AddPost = () => {
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setFormData((prev) => ({ ...prev, title: reviewTitle, thumbnail: previewThumbnail ?? "", teaser: teaser, content: content, summaryTitle: summaryTitle, summaryContent: summaryContent, plusList: plusList, minusList: minusList, score: score, publishDate: `${new Date().toISOString()}`, author_id: user?.id ?? 1, game_id: selectedGame.id }));
-        console.log(formData)
-        await postNews(formData)
+        const updatedFormData = {
+            ...formData,
+            title: reviewTitle,
+            thumbnail: previewThumbnail ?? "",
+            teaser: teaser,
+            content: content,
+            summaryTitle: summaryTitle,
+            summaryContent: summaryContent,
+            plusList: plusList,
+            minusList: minusList,
+            score: score,
+            publishDate: new Date().toISOString(),
+            author_id: user?.id ?? 1,
+            game_id: selectedGame.id,
+        };
+        setFormData(updatedFormData);
+        await postNews(updatedFormData)
+        redirect("/")
     }
 
     return (
@@ -138,7 +154,7 @@ const AddPost = () => {
                         <span className="text-sm text-zinc-400">Lub</span>
                         <div className="grid grid-cols-[1fr_120px] gap-4 p-4 text-sm">
                             <FormInput icon="material-symbols:cloud-upload-rounded" type="text" placeholder="Wpisz link do obrazka" name="thumbnail_url" value={previewThumbnailUrl ?? ""} event={(e) => setPreviewThumbnailUrl(e.target.value)} />
-                            <FormButton type="submit" text="Dodaj" event={() => setPreviewThumbnail(previewThumbnailUrl)}/>
+                            <FormButton type="button" text="Dodaj" event={[() => setPreviewThumbnail(previewThumbnailUrl),() => setPreviewThumbnailUrl("")]}/>
                         </div>
                     </FormFile>
                 : <PreviewImage classes="w-[1200px] h-[650px]" previewImage={previewThumbnail} deleteImage={() => setPreviewThumbnail(undefined)}/>}
@@ -151,7 +167,7 @@ const AddPost = () => {
                             type="text"
                             placeholder="Wpisz Nagłówek"
                             name={`${field.type}_${field.id}`}
-                            value={field.value}
+                            value={field.content}
                             icon="material-symbols:title-rounded"
                             event={(e) => handleUpdateField(field.id, e.target.value)}
                         />
@@ -160,7 +176,7 @@ const AddPost = () => {
                     <PostFieldWrapper key={field.id} fieldId={field.id} deleteField={handleDeleteField}>
                         <FormTextArea
                             key={field.id}
-                            value={field.value}
+                            value={field.content}
                             placeholder="Wpisz treść"
                             name={`${field.type}_${field.id}`}
                             event={(e) => handleUpdateField(field.id, e.target.value)}
@@ -174,11 +190,11 @@ const AddPost = () => {
                                     type="text"
                                     placeholder="Dodaj adnotacje"
                                     name={`${field.type}_${field.id}`}
-                                    value={field.additional ?? ""}
-                                    event={(e) => handleUpdateField(field.id, field.value, e.target.value)}
+                                    value={field.description ?? ""}
+                                    event={(e) => handleUpdateField(field.id, field.content, e.target.value)}
                                 />
                             </span>
-                            {!field.value ?
+                            {!field.content ?
                             <FormFile
                                 icon="material-symbols:upload-rounded"
                                 id={field.id}
@@ -191,12 +207,12 @@ const AddPost = () => {
                                 <span className="text-sm text-zinc-400">Lub</span>
                                 <div className="grid grid-cols-[1fr_120px] gap-4 p-4 text-sm">
                                     <FormInput icon="material-symbols:cloud-upload-rounded" type="text" placeholder="Wpisz link do obrazka" name="thumbnail_url" value={previewThumbnailUrl ?? ""} event={(e) => setPreviewThumbnailUrl(e.target.value)} />
-                                    <FormButton type="submit" text="Dodaj" event={() => handleUpdateField(field.id, previewThumbnailUrl ?? "")}/>
+                                    <FormButton type="submit" text="Dodaj" event={[() => handleUpdateField(field.id, previewThumbnailUrl ?? ""), () => setPreviewThumbnailUrl("")]}/>
                                 </div>
                             </FormFile>
                             : 
                             <PreviewImage
-                                previewImage={field.value}
+                                previewImage={field.content}
                                 classes="w-full h-[400px] col-span-1"
                                 deleteImage={() => handleUpdateField(field.id, "")}
                             />}
@@ -236,7 +252,7 @@ const AddPost = () => {
                             value={plus}
                             event={(e) => setPlus(e.target.value)}
                         />
-                        <FormButton type="button" text="Dodaj" event={() => addPlus()} />
+                        {plus && <FormButton type="button" text="Dodaj" event={() => addPlus()} />}
                     </ul>
                     <ul className="flex flex-col gap-4">
                         {minusList.map((minus, index) =>(
@@ -252,7 +268,7 @@ const AddPost = () => {
                             value={minus}
                             event={(e) => setMinus(e.target.value)}
                         />
-                        <FormButton type="button" text="Dodaj" event={() => addMinus()} />
+                        {minus && <FormButton type="button" text="Dodaj" event={() => addMinus()} />}
                     </ul>
                 </div>
                 <FormButton type="submit" text="Dodaj recenzje" />
