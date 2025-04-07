@@ -1,7 +1,10 @@
 import ListingWrapper from "./components/review/listing-wrapper";
+import HomeLayoutProvider from "./context/HomeLayoutProvider";
 
 export default function Home() {
   return (
-    <ListingWrapper />
+    <HomeLayoutProvider>
+      <ListingWrapper />
+    </HomeLayoutProvider>
   )
 }

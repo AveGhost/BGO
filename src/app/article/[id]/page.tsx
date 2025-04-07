@@ -26,7 +26,7 @@ const SinglePage = async ({params}: {params: {id: number}}) => {
     const author = news.author
     const content = news.content
     const gameTitle = news.game.title
-    console.log(author)
+    console.log(news)
     return (
         <section className="py-6 container mx-auto">
             <Hero title={title} publishDate={publishDate} author={author} image={thumbnail} />
