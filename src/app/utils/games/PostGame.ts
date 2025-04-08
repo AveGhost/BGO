@@ -16,6 +16,7 @@ export default async function postGame(data: GameData): Promise<{ game?: GameDat
             platform: data.platform.toUpperCase(),
             categories: data.categories.map((category) => category.toUpperCase()),
         });
+        console.log(response.data);
         return { game: response.data };
     } catch (error: any) {
         console.error(error);
