@@ -22,6 +22,7 @@ import { deleteField } from "@/app/utils/fileHandlers/deleteField"
 import { AuthContext } from "@/app/context/AuthProvider"
 import { PostFormData } from "@/app/mixins/PostFormData"
 import { redirect } from "next/navigation"
+import Steps from "@/app/components/article/steps.component"
 
 interface GameProps {
     title: string
@@ -140,6 +141,7 @@ const AddPost = () => {
 
     return (
         <div className="container max-w-[1200px] mx-auto py-6">
+            <Steps />
             <FormWrapper onSubmit={handleFormSubmit} isDataValid={null}>
                 <FormInput icon="material-symbols:title-rounded" type="text" placeholder="Wpisz tytuł recenzji" name="title" value={reviewTitle} event={(e) => setReviewTitle(e.target.value)} />
                 {!previewThumbnail ?
