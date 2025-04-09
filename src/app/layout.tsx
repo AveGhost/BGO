@@ -3,7 +3,7 @@ import { Rubik} from "next/font/google";
 import "./globals.css";
 import Navigation from "./components/navigation/navigation.component";
 import AuthProvider from "./context/AuthProvider";
-
+import { Toaster } from "react-hot-toast";
 
 const rubik = Rubik({
   variable: "--font-rubik",
@@ -26,6 +26,7 @@ export default function RootLayout({
         className={`${rubik.variable} antialiased`}
       >
         <AuthProvider>
+            <Toaster position="top-center" reverseOrder={false} />
             <Navigation />
             {children}
         </AuthProvider>
