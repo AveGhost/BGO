@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "store-images.s-microsoft.com",
       },
+      {
+        protocol: "https",
+        hostname: "planetagracza.pl",
+      }
     ],
   },
 };
