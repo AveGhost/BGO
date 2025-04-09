@@ -4,6 +4,7 @@ import RatingTable from "../../components/review/rating-table.component"
 import getNews from "@/app/utils/news/GetNews"
 import Hero from "@/app/components/article/hero.component"
 import Article from "@/app/components/article/article-wrapper.component"
+import ArticleAction from "@/app/components/article/article-action.component"
 
 interface ArticleItemProps {
     content: string
@@ -41,6 +42,7 @@ const SinglePage = async ({params}: {params: {id: number}}) => {
                     </div>
                 </div>
             </div>
+            <ArticleAction pageId={id} />
         </section>
     )
 }
