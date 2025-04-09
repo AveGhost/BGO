@@ -23,6 +23,7 @@ import { AuthContext } from "@/app/context/AuthProvider"
 import { PostFormData } from "@/app/mixins/PostFormData"
 import { redirect } from "next/navigation"
 import Steps from "@/app/components/article/steps.component"
+import toast from "react-hot-toast"
 
 interface GameProps {
     title: string
@@ -135,14 +136,25 @@ const AddPost = () => {
             game_id: selectedGame.id,
         };
         setFormData(updatedFormData);
-        await postNews(updatedFormData)
-        redirect("/")
+        console.log(updatedFormData);
+        try {
+            const promise = postNews(updatedFormData)
+            await toast.promise(promise, {
+                loading: 'Publikowanie...',
+                success: 'Pomyślnie opublikowano!',
+                error: (err) => err.message || 'Wystąpił błąd przy dodawaniu artykułu',
+            })
+
+            setTimeout(() => {
+                redirect("/")
+            },500)
+        } catch (error) {}
     }
 
     return (
         <div className="container max-w-[1200px] mx-auto py-6">
             <Steps />
-            <FormWrapper onSubmit={handleFormSubmit} isDataValid={null}>
+            <FormWrapper onSubmit={handleFormSubmit}>
                 <FormInput icon="material-symbols:title-rounded" type="text" placeholder="Wpisz tytuł recenzji" name="title" value={reviewTitle} event={(e) => setReviewTitle(e.target.value)} />
                 {!previewThumbnail ?
                     <FormFile 
@@ -242,7 +254,7 @@ const AddPost = () => {
                 <div className="flex justify-between my-8">
                     <ul className="flex flex-col gap-4">
                         {plusList.map((plus, index) =>( 
-                            <PostFieldWrapper key={index} fieldId={index} deleteField={removePlus} classes="flex items-center flex-row-reverse justify-between" iconClass="relative top-0 right-0">
+                            <PostFieldWrapper key={index} fieldId={index} deleteField={removePlus} classes="flex items-center flex-row-reverse justify-between gap-2" iconClass="relative top-0 right-0">
                                 <RatingTableElement text={plus} icon="ic:round-plus" isPositive />
                             </PostFieldWrapper>
                         ))}
@@ -258,7 +270,7 @@ const AddPost = () => {
                     </ul>
                     <ul className="flex flex-col gap-4">
                         {minusList.map((minus, index) =>(
-                            <PostFieldWrapper key={index} fieldId={index} deleteField={removeMinus} classes="flex items-center flex-row-reverse justify-between" iconClass="relative top-0 right-0">
+                            <PostFieldWrapper key={index} fieldId={index} deleteField={removeMinus} classes="flex items-center flex-row-reverse justify-between gap-2" iconClass="relative top-0 right-0">
                                 <RatingTableElement text={minus} icon="ic:round-minus" isPositive={false} />
                             </PostFieldWrapper>
                         ))}
