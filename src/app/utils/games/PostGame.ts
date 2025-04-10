@@ -7,7 +7,7 @@ interface GameData {
     platform: string;
     categories: string[];
 }
-export default async function postGame(data: GameData): Promise<{ game?: GameData; error?: string }> {
+export default async function postGame(data: GameData) {
     try {
         const response = await api.post("/games",{
             title: data.title,
@@ -16,15 +16,11 @@ export default async function postGame(data: GameData): Promise<{ game?: GameDat
             platform: data.platform.toUpperCase(),
             categories: data.categories.map((category) => category.toUpperCase()),
         });
-        console.log(response.data);
-        return { game: response.data };
+        return response.data
     } catch (error: any) {
         console.error(error);
         
-        if(error.response && error.response.data && error.response.data.message) {
-            return { error: error.response.data.message };
-        }
-        
-        return { error: 'Wystąpił błąd podczas dodawania gry' }
+        const message = error?.response?.data?.message || "Nieznany błąd"
+        throw new Error(message)
     }
 }
