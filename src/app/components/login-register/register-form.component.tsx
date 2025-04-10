@@ -5,10 +5,11 @@ import FormWrapper from "../form/form-wrapper.component"
 import FormButton from "../form/form-button.component"
 import FormInput from "../form/form-input.component"
 import handleRegister from "@/app/utils/RegisterApi"
+import toast from "react-hot-toast"
+import { redirect } from "next/navigation"
 
 const RegisterForm = () => {
     const [formData, setFormData] = useState({email: '', password: '', first_name: '', last_name: '', username: '', password2: ''})
-    const [isDataValid, setIsDataValid] = useState<string | null>(null)
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -17,14 +18,24 @@ const RegisterForm = () => {
 
     const formSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const errorMessage = await handleRegister(formData);
-        setIsDataValid(errorMessage);
+        try {
+            const promise = handleRegister(formData);
+            await toast.promise(promise, {
+                loading: 'Rejestracja...',
+                success: 'Rejestracja pomyślna',
+                error: (err) => err.message || 'Wystąpił błąd podczas rejestracji',
+            })
+
+            setTimeout(() => {
+                redirect('/login');
+            },500)
+        } catch(err) {}
     }
     return (
         <div className="form w-full max-w-[450px] min-h-[550px] p-4">
             <div className="flex flex-col gap-4 justify-center items-center h-full">
                 <h1 className="text-2xl text-center mb-6">Rejestracja</h1>
-                <FormWrapper onSubmit={formSubmit} isDataValid={isDataValid}>
+                <FormWrapper onSubmit={formSubmit}>
                     <FormInput icon="majesticons:user-line" type="text" placeholder="Imie" name="first_name" value={formData.first_name} event={handleInputChange} />
                     <FormInput icon="majesticons:user-line" type="text" placeholder="Nazwisko" name="last_name" value={formData.last_name} event={handleInputChange}/>
                     <FormInput icon="majesticons:user-line" type="text" placeholder="Nazwa użytkownika" name="username" value={formData.username} event={handleInputChange}/>
