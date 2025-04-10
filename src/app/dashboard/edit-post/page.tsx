@@ -15,7 +15,6 @@ import AddFieldButtons from "@/app/components/add-post/add-field-buttons"
 import SetSummaryCardWrapper from "@/app/components/add-post/set-summary-card-wrapper.component"
 import RatingTableElement from "@/app/components/review/rating-table-element.component"
 import FormButton from "@/app/components/form/form-button.component"
-import FormSelect from "@/app/components/form/form-select/form-select.component"
 import { addField } from "@/app/utils/fileHandlers/addField"
 import { updateField } from "@/app/utils/fileHandlers/updateFields"
 import { handleFileSelect, handleDrop, handleDragOver } from "@/app/utils/fileHandlers/handleFileInput"
@@ -24,6 +23,9 @@ import { AuthContext } from "@/app/context/AuthProvider"
 import { PostFormData } from "@/app/mixins/PostFormData"
 import { redirect } from "next/navigation"
 import { useSearchParams } from "next/navigation"
+import toast from "react-hot-toast"
+import { GameSearchResults } from "@/app/mixins/GameSearchResults"
+import FormSearchSelect from "@/app/components/form/form-select/form-search-select.component"
 
 interface GameProps {
     title: string
@@ -34,7 +36,23 @@ const EditPost = () => {
     const searchParams = useSearchParams()
     const id: number = parseInt(searchParams.get('id')!)
     const user = useContext(AuthContext)?.user
-    const [existingNews, setExistingNews] = useState([])
+    const [postAuthorId, setPostAuthorId] = useState<number>(0)
+    const [currentPostGameId, setCurrentPostGameId] = useState<number>(0)
+    const [searchResults, setSearchResults] = useState<GameSearchResults>({content: [], page: {size: 0, totalElements: 0, totalPages: 0, number: 0}})
+    const [existingNews, setExistingNews] = useState<PostFormData>({
+        title: "",
+        thumbnail: "",
+        teaser: "",
+        content: [],
+        summaryTitle: "",
+        summaryContent: "",
+        plusList: [],
+        minusList: [],
+        score: 0,
+        publishDate: `${Date.now().toString()}`,
+        author_id: postAuthorId,
+        game_id: currentPostGameId
+    })
     const [games, setGames] = useState<GameProps[]>([])
     const [previewThumbnail, setPreviewThumbnail] = useState<string | undefined>(undefined)
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = useState<string | undefined>(undefined)
@@ -94,8 +112,8 @@ const EditPost = () => {
         setIsOpen(!isOpen)
     }
 
-    const chooseGame = (game: string) => {
-        setSelectedGame({ title: game , id: 0 })
+    const chooseGame = (game: string, id?: number) => {
+        setSelectedGame({ title: game , id: id ?? 0 })
         setIsOpen(false)
     }
 
@@ -111,15 +129,32 @@ const EditPost = () => {
         fetchGames()
     },[])
 
-    const findGameId = (gameTitle: string) => {
-        if(games.length === 0) return
-        const gameId = games.find(game => game.title === gameTitle)?.id
-        setSelectedGame({ title: gameTitle, id: gameId ?? 0 })
-    }
-
     useEffect(() => {
-        findGameId(selectedGame.title)
-    },[selectedGame.title])
+        if(searchResults.content.length > 0) {
+            setIsOpen(true)
+        } else {
+            setIsOpen(false)
+        }
+    },[searchResults])
+
+    const getUpdatedFields = (original: any, updated: any, exclude: string[] = []) => {
+        const changed: Record<string, any> = {};
+    
+        for (const key in updated) {
+            if (exclude.includes(key)) continue;
+    
+            const originalVal = original[key] ?? null;
+            const updatedVal = updated[key] ?? null;
+    
+            if (originalVal !== updatedVal) {
+                changed[key] = updatedVal;
+            }
+        }
+    
+        return changed;
+    };
+    
+    
 
     useEffect(() => {
         const fetchExistingNews = async () => {
@@ -138,6 +173,8 @@ const EditPost = () => {
                 setPreviewThumbnailUrl(response.thumbnail)
                 setPreviewThumbnail(response.thumbnail)
                 setSelectedGame({ title: response.game.title, id: response.game.id })
+                setCurrentPostGameId(response.game.id)
+                setPostAuthorId(response.author.id)
             } catch (error) {
                 console.error(error)
             }
@@ -148,7 +185,6 @@ const EditPost = () => {
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const updatedFormData = {
-            ...formData,
             title: reviewTitle,
             thumbnail: previewThumbnail ?? "",
             teaser: teaser,
@@ -162,15 +198,36 @@ const EditPost = () => {
             author_id: user?.id ?? 1,
             game_id: selectedGame.id,
         };
-        setFormData(updatedFormData);
-        console.log(updatedFormData)
-        await editNews(updatedFormData, id)
-        redirect(`/article/${id}`)
+        
+        const adjustExistingData = {
+            ...existingNews,
+            author_id: postAuthorId,
+            game_id: currentPostGameId
+        }
+
+        const changedData = getUpdatedFields(adjustExistingData, updatedFormData,["publishDate","minusList","plusList"]);
+        if (Object.keys(changedData).length === 0) {
+            toast("Nic nie zmieniono");
+            return;
+        }
+
+        try {
+            const promise = editNews(changedData, id)
+            await toast.promise(promise, {
+                loading: "Edytowanie...",
+                success: "Edytowano!",
+                error: (err) => err.message || 'Wystąpił błąd przy edytowaniu artykułu',
+            })
+
+            setTimeout(() => {
+                redirect(`/article/${id}`)
+            },500)
+        } catch (err) {}
     }
 
     return (
         <div className="container max-w-[1200px] mx-auto py-6">
-            <FormWrapper onSubmit={handleFormSubmit} isDataValid={null}>
+            <FormWrapper onSubmit={handleFormSubmit}>
                 <FormInput icon="material-symbols:title-rounded" type="text" placeholder="Wpisz tytuł recenzji" name="title" value={reviewTitle} event={(e) => setReviewTitle(e.target.value)} />
                 {!previewThumbnail ?
                     <FormFile 
@@ -251,7 +308,7 @@ const EditPost = () => {
                 ))}
                 <AddFieldButtons addField={handleAddField} />
                 <SetSummaryCardWrapper score={score} setScore={setScore}>
-                    <FormSelect isOpen={isOpen} onClick={toggleSelect} icon="arcticons:rpg-simple-dice" title={selectedGame.title} elements={games.map((game) => (game.title))} singleSelect={chooseGame} />
+                    <FormSearchSelect isOpen={isOpen} elements={searchResults.content.map(game => game)} singleSelect={chooseGame} onClick={toggleSelect} searchResults={setSearchResults} icon="arcticons:rpg-simple-dice" choosen={selectedGame.title} deleteChoosen={() => setSelectedGame({ title: "", id: 0 })} />
                     <FormInput 
                         icon="material-symbols:title-rounded" 
                         type="text" 
