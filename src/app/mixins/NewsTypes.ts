@@ -3,7 +3,7 @@ export interface newsTypes {
     title: string
     description: string
     teaser: string
-    image: string
+    thumbnail: string
     href: string
     publishDate?: string
     score: number
