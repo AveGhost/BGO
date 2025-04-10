@@ -10,32 +10,13 @@ interface RegisterData {
 }
 
 export default async function handleRegister(data: RegisterData): Promise<string | null> {
-    if(!data.email || !data.password || !data.password2 || !data.first_name || !data.last_name || !data.username) {
-        return "Wypełnij wszystkie pola";
-    }
-
-    if(data.password !== data.password2) {
-        return "Hasła nie zgadzają się";
-    }
-
-    if(data.password.length < 8) {
-        return "Hasło jest za krótkie";
-    }
-
-    if(!data.email.includes("@")) {
-        return "Niepoprawny adres e-mail";
-    }
-
     try {
         const response = await api.post("/auth/register", data);
         return null;
     } catch (error: any) {
         console.error(error);
         
-        if(error.response && error.response.data && error.response.data.message) {
-            return error.response.data.message;
-        }
-
-        return 'Wystąpił błąd podczas rejestacji';
+        const message = error?.response?.data?.message || "Nieznany błąd"
+        throw new Error(message)
     }
 };

@@ -5,17 +5,14 @@ interface LoginData {
     password: string;
 }
 
-export default async function handleLogin(data: LoginData): Promise<{ token?: string; error?: string }> {
+export default async function handleLogin(data: LoginData){
     try {
         const response = await api.post("/auth/login", data);
-        return { token: response.data.token };
+        return response.data.token
     } catch (error: any) {
         console.error(error);
         
-        if(error.response && error.response.data && error.response.data.message) {
-            return { error: error.response.data.message };
-        }
-        
-        return { error: 'Wystąpił błąd podczas logowania' }
+        const message = error?.response?.data?.message || "Nieznany błąd"
+        throw new Error(message)
     }
 };
