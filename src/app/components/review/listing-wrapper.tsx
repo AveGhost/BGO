@@ -17,7 +17,7 @@ const ListingWrapper = ({posts}: {posts: responseTypes}) => {
             <LayoutChanger />
             {!posts && <div className="flex justify-center items-center col-span-4"><BeatLoader color="#fff" size={30} /></div>}
             {posts && posts.content.map((item) => (
-                <ReviewCard key={item.id} href={`/article/${item.id}`} rate={item.score} isGrid={isGrid} image="/placeholder-image.webp" title={item.title} description={item.teaser} author={{name: item.author.firstName, date: item.publishDate}}/>
+                <ReviewCard key={item.id} href={`/article/${item.id}`} rate={item.score} isGrid={isGrid} image={item.thumbnail} title={item.title} description={item.teaser} author={{name: item.author.firstName, date: item.publishDate}}/>
             ))}
         </div>
     )
