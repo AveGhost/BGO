@@ -7,9 +7,10 @@ import { GameSearchResults } from "@/app/mixins/GameSearchResults"
 
 interface SearchInputProps {
     onSearchResults: (data: GameSearchResults) => void
+    placeholder?: string
 }
 
-const SearchInput = ({ onSearchResults }: SearchInputProps) => {
+const SearchInput = ({ onSearchResults, placeholder }: SearchInputProps) => {
     const [search, setSearch] = useState("")
     const [isSearching, setIsSearching] = useState(false)
     const [debounceResults, setDebounceResults] = useState(search)
@@ -46,7 +47,7 @@ const SearchInput = ({ onSearchResults }: SearchInputProps) => {
             <FormInput
                 type="text"
                 name="search"
-                placeholder="Wyszukaj..."
+                placeholder={placeholder ? placeholder : "Wyszukaj..."}
                 value={search}
                 icon={isSearching ? "codex:loader" : "ic:round-search"}
                 event={searchHandler}
