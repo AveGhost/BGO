@@ -8,7 +8,7 @@ interface RatingTableElementProps {
 
 const RatingTableElement = ({icon,text,isPositive}: RatingTableElementProps) => {
     return (
-        <li className="flex items-center gap-2">
+        <li className="flex items-center text-sm gap-2">
             <Icon icon={icon} width="32" height="32" className={isPositive ? "text-green-700" : "text-red-600"} />
             <span>{text}</span>
         </li>
