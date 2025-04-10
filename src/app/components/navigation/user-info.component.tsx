@@ -25,7 +25,7 @@ const UserInfo = ({user}: UserInfoProps) => {
             <AuthorAvatar avatar="/avatar.png" />
             <AuthorName name={user.firstName} />
             <Icon icon="material-symbols-light:arrow-drop-down" width="24" height="24" className={`cursor-pointer ${openDropDown ? "rotate-180" : "rotate-0"}`} onClick={toggleDropDown} />
-            {openDropDown && <DropDownWrapper role={user.userRole} />}
+            {openDropDown && <DropDownWrapper role={user.userRole} toggleDropDown={toggleDropDown} />}
         </div>
     )
 }
