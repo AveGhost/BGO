@@ -10,7 +10,7 @@ interface PostFieldWrapperProps {
 const PostFieldWrapper = ({deleteField,children,fieldId,iconClass,classes}: PostFieldWrapperProps) => {
     return (
         <div className={`relative ${classes}`}>
-            <Icon icon="icon-park-outline:close-one" width="24" height="24" className={`text-red-500 absolute -top-3 -right-2 z-10 cursor-pointer ${iconClass}`} onClick={() => deleteField(fieldId)}/>
+            <Icon icon="icon-park-outline:close-one" width="24" height="24" className={`text-red-500 min-w-[24px] absolute -top-3 -right-2 z-10 cursor-pointer ${iconClass}`} onClick={() => deleteField(fieldId)}/>
             {children}
         </div>
     )
