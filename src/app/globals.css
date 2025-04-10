@@ -42,3 +42,7 @@ body {
   animation-name: fadeInDown;
   animation-timing-function: ease-out;
 }
+
+article p {
+  line-height: 1.8;
+}

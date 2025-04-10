@@ -26,7 +26,7 @@ export default function RootLayout({
         className={`${rubik.variable} antialiased`}
       >
         <AuthProvider>
-            <Toaster position="top-center" reverseOrder={false} />
+            <Toaster position="top-center" reverseOrder={false} toastOptions={{style: {background: '#27272a', color: '#fff',border: '1px solid #9f9fa9'}}} />
             <Navigation />
             {children}
         </AuthProvider>
