@@ -56,7 +56,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useLayoutEffect(() => {
         const refreshInterceptor = api.interceptors.response.use((response) => response, async (error) => {
             const originalRequest = error.config;
-            if(error.response.status === 403 && error.response.data.message === 'Sesja wygasła') {
+            const status = error.response?.status;
+            const message = error.response?.data?.message;
+            if(status === 403 && message === 'Sesja wygasła') {
+                setToken(null);
                 try {
                     const response = await api.get("/auth/refresh");
                     setToken(response.data.token);
