@@ -251,8 +251,8 @@ const AddPost = () => {
                         event={(e) => setSummaryContent(e.target.value)} 
                     />
                 </SetSummaryCardWrapper>
-                <div className="flex justify-between my-8">
-                    <ul className="flex flex-col gap-4">
+                <div className="flex justify-between gap-8 my-8">
+                    <ul className="flex flex-col gap-4 w-full">
                         {plusList.map((plus, index) =>( 
                             <PostFieldWrapper key={index} fieldId={index} deleteField={removePlus} classes="flex items-center flex-row-reverse justify-between gap-2" iconClass="relative top-0 right-0">
                                 <RatingTableElement text={plus} icon="ic:round-plus" isPositive />
@@ -268,7 +268,7 @@ const AddPost = () => {
                         />
                         {plus && <FormButton type="button" text="Dodaj" event={() => addPlus()} />}
                     </ul>
-                    <ul className="flex flex-col gap-4">
+                    <ul className="flex flex-col gap-4 w-full">
                         {minusList.map((minus, index) =>(
                             <PostFieldWrapper key={index} fieldId={index} deleteField={removeMinus} classes="flex items-center flex-row-reverse justify-between gap-2" iconClass="relative top-0 right-0">
                                 <RatingTableElement text={minus} icon="ic:round-minus" isPositive={false} />
