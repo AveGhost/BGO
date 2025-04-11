@@ -9,7 +9,7 @@ const ArticleAction = ({pageId}: {pageId: number}) => {
     const [isOpen, setIsOpen] = useState(false)
     const {user} = useContext(AuthContext)!
 
-    if(user?.userRole !== "ADMINISTRATOR") return
+    if(user?.userRole !== "ADMINISTRATOR" && user?.userRole !== "EDITOR") return
     
     return (
         <>
