@@ -14,7 +14,7 @@ import AddFieldButtons from "@/app/components/add-post/add-field-buttons"
 import SetSummaryCardWrapper from "@/app/components/add-post/set-summary-card-wrapper.component"
 import RatingTableElement from "@/app/components/review/rating-table-element.component"
 import FormButton from "@/app/components/form/form-button.component"
-import FormSelect from "@/app/components/form/form-select/form-select.component"
+import FormSearchSelect from "@/app/components/form/form-search/form-search-select.component"
 import { addField } from "@/app/utils/fileHandlers/addField"
 import { updateField } from "@/app/utils/fileHandlers/updateFields"
 import { handleFileSelect, handleDrop, handleDragOver } from "@/app/utils/fileHandlers/handleFileInput"
@@ -24,6 +24,7 @@ import { PostFormData } from "@/app/mixins/PostFormData"
 import { redirect } from "next/navigation"
 import Steps from "@/app/components/article/steps.component"
 import toast from "react-hot-toast"
+import { GameSearchResults } from "@/app/mixins/GameSearchResults"
 
 interface GameProps {
     title: string
@@ -33,6 +34,7 @@ interface GameProps {
 const AddPost = () => {
     const user = useContext(AuthContext)?.user
     const [games, setGames] = useState<GameProps[]>([])
+    const [searchResults, setSearchResults] = useState<GameSearchResults>({content: [], page: {size: 0, totalElements: 0, totalPages: 0, number: 0}})
     const [previewThumbnail, setPreviewThumbnail] = useState<string | undefined>(undefined)
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = useState<string | undefined>(undefined)
     const [teaser, setTeaser] = useState<string>("")
@@ -62,7 +64,7 @@ const AddPost = () => {
         score: score,
         publishDate: `${Date.now().toString()}`,
         author_id: user?.id ?? 1,
-        game_id: 1
+        game_id: selectedGame.id
     })
 
     const handleAddField = addField(setContent);
@@ -91,8 +93,8 @@ const AddPost = () => {
         setIsOpen(!isOpen)
     }
 
-    const chooseGame = (game: string) => {
-        setSelectedGame({ title: game , id: 0 })
+    const chooseGame = (game: string, id?: number) => {
+        setSelectedGame({ title: game , id: id ?? 0 })
         setIsOpen(false)
     }
 
@@ -109,13 +111,12 @@ const AddPost = () => {
     },[])
 
     useEffect(() => {
-        const findGameId = (gameTitle: string) => {
-            const gameId = games.find(game => game.title === gameTitle)?.id
-            setSelectedGame({ title: gameTitle, id: gameId ?? 0 })
+        if(searchResults.content.length > 0) {
+            setIsOpen(true)
+        } else {
+            setIsOpen(false)
         }
-
-        findGameId(selectedGame.title)
-    },[selectedGame.title])
+    },[searchResults])
 
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -227,7 +228,7 @@ const AddPost = () => {
                             : 
                             <PreviewImage
                                 previewImage={field.content}
-                                classes="w-full h-[400px] col-span-1"
+                                classes="w-full h-[650px] col-span-1"
                                 deleteImage={() => handleUpdateField(field.id, "")}
                             />}
                         </div>
@@ -235,7 +236,7 @@ const AddPost = () => {
                 ))}
                 <AddFieldButtons addField={handleAddField} />
                 <SetSummaryCardWrapper score={score} setScore={setScore}>
-                    <FormSelect isOpen={isOpen} onClick={toggleSelect} icon="arcticons:rpg-simple-dice" title={selectedGame.title} elements={games.map((game) => (game.title))} singleSelect={chooseGame} />
+                    <FormSearchSelect isOpen={isOpen} elements={searchResults.content.map(game => game)} singleSelect={chooseGame} onClick={toggleSelect} searchResults={setSearchResults} icon="arcticons:rpg-simple-dice" choosen={selectedGame.title} deleteChoosen={() => setSelectedGame({ title: "", id: 0 })} />
                     <FormInput 
                         icon="material-symbols:title-rounded" 
                         type="text" 

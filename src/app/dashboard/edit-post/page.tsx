@@ -25,7 +25,7 @@ import { redirect } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import toast from "react-hot-toast"
 import { GameSearchResults } from "@/app/mixins/GameSearchResults"
-import FormSearchSelect from "@/app/components/form/form-select/form-search-select.component"
+import FormSearchSelect from "@/app/components/form/form-search/form-search-select.component"
 
 interface GameProps {
     title: string
@@ -327,7 +327,7 @@ const EditPost = () => {
                 <div className="flex justify-between my-8">
                     <ul className="flex flex-col gap-4">
                         {plusList.map((plus, index) =>( 
-                            <PostFieldWrapper key={index} fieldId={index} deleteField={removePlus} classes="flex items-center flex-row-reverse justify-between" iconClass="relative top-0 right-0">
+                            <PostFieldWrapper key={index} fieldId={index} deleteField={removePlus} classes="flex items-center flex-row-reverse justify-between gap-2" iconClass="relative top-0 right-0">
                                 <RatingTableElement text={plus} icon="ic:round-plus" isPositive />
                             </PostFieldWrapper>
                         ))}
@@ -343,7 +343,7 @@ const EditPost = () => {
                     </ul>
                     <ul className="flex flex-col gap-4">
                         {minusList.map((minus, index) =>(
-                            <PostFieldWrapper key={index} fieldId={index} deleteField={removeMinus} classes="flex items-center flex-row-reverse justify-between" iconClass="relative top-0 right-0">
+                            <PostFieldWrapper key={index} fieldId={index} deleteField={removeMinus} classes="flex items-center flex-row-reverse justify-between gap-2" iconClass="relative top-0 right-0">
                                 <RatingTableElement text={minus} icon="ic:round-minus" isPositive={false} />
                             </PostFieldWrapper>
                         ))}
