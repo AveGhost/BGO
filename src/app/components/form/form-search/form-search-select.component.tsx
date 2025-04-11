@@ -1,4 +1,4 @@
-import FormSelectWrapper from "./form-select-wrapper.component"
+import FormSelectWrapper from "./form-search-select-wrapper.component"
 import SearchInput from "../../other/search-input.component"
 import { GameSearchResults } from "@/app/mixins/GameSearchResults"
 import { Icon } from "@iconify/react/dist/iconify.js"
