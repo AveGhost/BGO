@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Rubik} from "next/font/google";
+import { Rubik } from "next/font/google";
 import "./globals.css";
 import Navigation from "../components/navigation/navigation.component";
 import AuthProvider from "../context/AuthProvider";

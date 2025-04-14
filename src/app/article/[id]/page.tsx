@@ -1,10 +1,10 @@
-import SummaryCard from "../../../components/review/summary-card.component"
+import SummaryCard from "../../../components/ui/article/summary-card.component"
 import AuthorCard from "../../../components/author/author-card.component"
-import RatingTable from "../../../components/review/rating-table.component"
+import RatingTable from "../../../components/ui/article/rating-table.component"
 import getNews from "@/utils/news/GetNews"
-import Hero from "@/components/article/hero.component"
-import Article from "@/components/article/article-wrapper.component"
-import ArticleAction from "@/components/article/article-action.component"
+import Hero from "@/components/ui/article/hero.component"
+import Article from "@/components/article/single/article-wrapper.component"
+import ArticleAction from "@/components/ui/article/article-action.component"
 
 interface ArticleItemProps {
     content: string

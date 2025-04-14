@@ -2,7 +2,7 @@ import AuthorAvatar from "./author-avatar.component"
 import AuthorName from "./author-name.component"
 import AuthorDescription from "./author-description.component"
 import AuthorRole from "./author-role.component"
-import Date from "../other/date.component"
+import Date from "../ui/date/date.component"
 
 interface AuthorCardProps {
     avatar?: string

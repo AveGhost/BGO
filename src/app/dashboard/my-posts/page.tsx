@@ -1,5 +1,5 @@
 import HomeLayoutProvider from "@/context/HomeLayoutProvider"
-import ListingWrapper from "@/components/review/listing-wrapper"
+import ListingWrapper from "@/components/article/listing/listing-wrapper"
 import { newsTypes } from "@/types/NewsTypes"
 import getNewsAll from "@/utils/news/GetNewsAll"
 

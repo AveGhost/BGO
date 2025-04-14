@@ -1,13 +1,13 @@
 'use client'
 
-import Logo from "./logo.component"
+import Logo from "../ui/logo/logo.component"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useState, useEffect, useContext } from "react"
 import { AuthContext } from "@/context/AuthProvider"
-import NavButtons from "./nav-buttons.component"
-import NavList from "./nav-list.component"
-import MobileMenu from "./mobile-menu.component"
-import UserInfo from "./user-info.component"
+import NavButtons from "../ui/nav/nav-buttons.component"
+import NavList from "../ui/nav/nav-list.component"
+import MobileMenu from "../ui/nav/mobile-menu/mobile-menu.component"
+import UserInfo from "../ui/nav/dropdown/user-info.component"
 
 const Navigation = () => {
     const links = [
