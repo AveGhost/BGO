@@ -1,9 +1,9 @@
-import ListingWrapper from "@/app/components/review/listing-wrapper";
-import HomeLayoutProvider from "@/app/context/HomeLayoutProvider";
-import getNewsAll from "@/app/utils/news/GetNewsAll";
-import { newsTypes } from "@/app/mixins/NewsTypes";
-import { pageTypes } from "@/app/mixins/PageTypes";
-import Pagination from "@/app/components/other/pagination/pagination.component";
+import ListingWrapper from "@/components/review/listing-wrapper";
+import HomeLayoutProvider from "@/context/HomeLayoutProvider";
+import getNewsAll from "@/utils/news/GetNewsAll";
+import { newsTypes } from "@/types/NewsTypes";
+import { pageTypes } from "@/types/PageTypes";
+import Pagination from "@/components/other/pagination/pagination.component";
 
 interface responseTypes {
     content: newsTypes[]

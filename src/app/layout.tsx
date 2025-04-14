@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Rubik} from "next/font/google";
 import "./globals.css";
-import Navigation from "./components/navigation/navigation.component";
-import AuthProvider from "./context/AuthProvider";
+import Navigation from "../components/navigation/navigation.component";
+import AuthProvider from "../context/AuthProvider";
 import { Toaster } from "react-hot-toast";
 
 const rubik = Rubik({

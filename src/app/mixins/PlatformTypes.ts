@@ -1,1 +1,0 @@
-export type Platform = 'PC' | 'NINTENDO_SWITCH' | 'PLAYSTATION' | 'XBOX' | 'ANDROID' | 'IOS';

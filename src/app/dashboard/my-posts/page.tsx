@@ -1,7 +1,7 @@
-import HomeLayoutProvider from "@/app/context/HomeLayoutProvider"
-import ListingWrapper from "@/app/components/review/listing-wrapper"
-import { newsTypes } from "@/app/mixins/NewsTypes"
-import getNewsAll from "@/app/utils/news/GetNewsAll"
+import HomeLayoutProvider from "@/context/HomeLayoutProvider"
+import ListingWrapper from "@/components/review/listing-wrapper"
+import { newsTypes } from "@/types/NewsTypes"
+import getNewsAll from "@/utils/news/GetNewsAll"
 
 interface responseTypes {
     content: newsTypes[]

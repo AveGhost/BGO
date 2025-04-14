@@ -1,6 +1,6 @@
-import AddGame from "@/app/components/add-post/add-game.component"
-import Steps from "@/app/components/article/steps.component"
-import GameListWrapper from "@/app/components/article/game-list-wrapper.component"
+import AddGame from "@/components/add-post/add-game.component"
+import Steps from "@/components/article/steps.component"
+import GameListWrapper from "@/components/article/game-list-wrapper.component"
 const AddGamePage = () => {
     return (
         <div className="container mx-auto h-full grid place-items-center items-center grow relative">

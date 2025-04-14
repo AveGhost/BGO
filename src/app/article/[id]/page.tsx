@@ -1,10 +1,10 @@
-import SummaryCard from "../../components/review/summary-card.component"
-import AuthorCard from "../../components/author/author-card.component"
-import RatingTable from "../../components/review/rating-table.component"
-import getNews from "@/app/utils/news/GetNews"
-import Hero from "@/app/components/article/hero.component"
-import Article from "@/app/components/article/article-wrapper.component"
-import ArticleAction from "@/app/components/article/article-action.component"
+import SummaryCard from "../../../components/review/summary-card.component"
+import AuthorCard from "../../../components/author/author-card.component"
+import RatingTable from "../../../components/review/rating-table.component"
+import getNews from "@/utils/news/GetNews"
+import Hero from "@/components/article/hero.component"
+import Article from "@/components/article/article-wrapper.component"
+import ArticleAction from "@/components/article/article-action.component"
 
 interface ArticleItemProps {
     content: string
@@ -16,17 +16,18 @@ interface ArticleItemProps {
 const SinglePage = async ({params}: {params: {id: number}}) => {
     const { id } = await params
     const news = await getNews({id: id})
-    const title = news.title
-    const thumbnail = news.thumbnail
-    const summaryTitle = news.summaryTitle
-    const summaryContent = news.summaryContent
-    const score = news.score
-    const publishDate = news.publishDate
-    const plusList = news.plusList
-    const minusList = news.minusList
-    const author = news.author
-    const content = news.content
-    const gameTitle = news.game.title
+    const { 
+            title,
+            publishDate,
+            author,
+            thumbnail,
+            content,
+            score,
+            gameTitle,
+            summaryContent,
+            summaryTitle,
+            plusList,
+            minusList } = news
     return (
         <section className="py-6 container mx-auto">
             <Hero title={title} publishDate={publishDate} author={author} image={thumbnail} />
