@@ -1,8 +1,7 @@
 'use client'
 
-import getGames from "@/utils/games/GetGame"
 import postNews from "@/utils/news/PostNews"
-import { useEffect, useState, useContext } from "react"
+import { useState, useContext } from "react"
 import FormWrapper from "@/components/ui/form/form-wrapper.component"
 import FormInput from "@/components/ui/form/form-input.component"
 import FormFile from "@/components/ui/form/form-file/form-file.component"
@@ -14,7 +13,6 @@ import AddFieldButtons from "@/components/ui/add-edit-post/add-field-buttons"
 import SetSummaryCardWrapper from "@/components/ui/add-edit-post/set-summary-card-wrapper.component"
 import RatingTableElement from "@/components/ui/article/rating-table-element.component"
 import Button from "@/components/ui/button/button.component"
-import FormSearchSelect from "@/components/ui/form/form-search/form-search-select.component"
 import { addField } from "@/mixins/addField"
 import { updateField } from "@/mixins/updateFields"
 import { handleFileSelect, handleDragOver, handleDrop } from "@/mixins/handleFileInput"
@@ -23,7 +21,8 @@ import { AuthContext } from "@/context/AuthProvider"
 import { PostFormData } from "@/types/PostFormData"
 import { redirect } from "next/navigation"
 import toast from "react-hot-toast"
-import { GameSearchResults } from "@/types/GameSearchResults"
+import SearchBox from "../ui/search-box/search-box.component"
+import SelectedGame from "../ui/add-edit-post/selected-game.component"
 
 interface GameProps {
     title: string
@@ -32,17 +31,14 @@ interface GameProps {
 
 const AddPostWrapper = () => {
     const user = useContext(AuthContext)?.user
-    const [games, setGames] = useState<GameProps[]>([])
-    const [searchResults, setSearchResults] = useState<GameSearchResults>({content: [], page: {size: 0, totalElements: 0, totalPages: 0, number: 0}})
     const [previewThumbnail, setPreviewThumbnail] = useState<string | undefined>(undefined)
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = useState<string | undefined>(undefined)
     const [teaser, setTeaser] = useState<string>("")
     const [content, setContent] = useState<Field[]>([])
     const [reviewTitle, setReviewTitle] = useState("")
     const [score, setScore] = useState(0)
-    const [isOpen, setIsOpen] = useState(false)
     const [selectedGame, setSelectedGame] = useState<GameProps>({
-        title: "Wybierz gre",
+        title: "",
         id: 0
     })
     const [summaryTitle, setSummaryTitle] = useState("")
@@ -88,36 +84,15 @@ const AddPostWrapper = () => {
         setMinusList(prevMinusList => prevMinusList.filter((_, index) => index !== id))
     }
 
-    const toggleSelect = () => {
-        setIsOpen(!isOpen)
-    }
-
     const chooseGame = (game: string, id?: number) => {
         setSelectedGame({ title: game , id: id ?? 0 })
-        setIsOpen(false)
     }
 
-    useEffect(() => {
-        const fetchGames = async () => {
-            try {
-                const response = await getGames()
-                setGames(response.content)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchGames()
-    },[])
+    const removeGame = () => {
+        setSelectedGame({ title: "", id: 0 })
+    }
 
-    useEffect(() => {
-        if(searchResults.content.length > 0) {
-            setIsOpen(true)
-        } else {
-            setIsOpen(false)
-        }
-    },[searchResults])
-
-
+    console.log(selectedGame)
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const updatedFormData = {
@@ -181,6 +156,8 @@ const AddPostWrapper = () => {
                         value={field.content}
                         icon="material-symbols:title-rounded"
                         event={(e) => handleUpdateField(field.id, e.target.value)}
+                        classes="bg-zinc-900 p-4 rounded-lg"
+                        iconClasses="right-6"
                     />
                 </PostFieldWrapper>
                 : field.type === 'PARAGRAPH' ?
@@ -191,20 +168,12 @@ const AddPostWrapper = () => {
                         placeholder="Wpisz treść"
                         name={`${field.type}_${field.id}`}
                         event={(e) => handleUpdateField(field.id, e.target.value)}
+                        classes="bg-zinc-900 p-4 rounded-lg"
                     />
                 </PostFieldWrapper>
                 :
                 <PostFieldWrapper key={field.id} fieldId={field.id} deleteField={handleDeleteField}>
-                    <div key={field.id} className="grid grid-cols-[180px_1fr]">
-                        <span className="place-content-end pr-3">
-                            <FormInput
-                                type="text"
-                                placeholder="Dodaj adnotacje"
-                                name={`${field.type}_${field.id}`}
-                                value={field.description ?? ""}
-                                event={(e) => handleUpdateField(field.id, field.content, e.target.value)}
-                            />
-                        </span>
+                    <div key={field.id} className="flex flex-col p-4 rounded-lg bg-zinc-900">
                         {!field.content ?
                         <FormFile
                             icon="material-symbols:upload-rounded"
@@ -227,12 +196,25 @@ const AddPostWrapper = () => {
                             classes="w-full h-[650px] col-span-1"
                             deleteImage={() => handleUpdateField(field.id, "")}
                         />}
+                        <span className="w-full mt-4">
+                            <FormInput
+                                type="text"
+                                placeholder="Dodaj adnotacje"
+                                name={`${field.type}_${field.id}`}
+                                value={field.description ?? ""}
+                                event={(e) => handleUpdateField(field.id, field.content, e.target.value)}
+                            />
+                        </span>
                     </div>
                 </PostFieldWrapper>
             ))}
             <AddFieldButtons addField={handleAddField} />
             <SetSummaryCardWrapper score={score} setScore={setScore}>
-                <FormSearchSelect isOpen={isOpen} elements={searchResults.content.map(game => game)} singleSelect={chooseGame} onClick={toggleSelect} searchResults={setSearchResults} icon="arcticons:rpg-simple-dice" choosen={selectedGame.title} deleteChoosen={() => setSelectedGame({ title: "", id: 0 })} />
+                {selectedGame.title ?
+                    <SelectedGame text={selectedGame.title} event={removeGame} />
+                : 
+                    <SearchBox event={chooseGame} />
+                }
                 <FormInput 
                     icon="material-symbols:title-rounded" 
                     type="text" 
