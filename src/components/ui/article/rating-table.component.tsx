@@ -1,8 +1,8 @@
 import RatingTableElement from "./rating-table-element.component"
 
-const RatingTable = ({pluses, minuses}: {pluses: string[] | string, minuses: string[]| string}) => {
-    const plusesArray = typeof pluses === "string" ? pluses.split(",") : pluses;
-    const minusesArray = typeof minuses === "string" ? minuses.split(",") : minuses;
+const RatingTable = ({pluses, minuses}: {pluses: string[], minuses: string[]}) => {
+    const plusesArray = pluses
+    const minusesArray = minuses
 
     return (
         <div className="flex justify-between my-8">
