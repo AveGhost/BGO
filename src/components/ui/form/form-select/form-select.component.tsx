@@ -20,12 +20,12 @@ const FormSelect = ({icon,title,elements,isSingle,onChange}: FormSelectProps) =>
             setThisTitle(el)
             onChange(el)
         } else {
-            setThisTitle(prev => {
-                const currentElement = prev as string[]
-                const selected = currentElement.includes(el) ? currentElement.filter(element => element !== el) : [...currentElement,el]
-                onChange(selected)
-                return selected
-            })
+            const selected = (thisTitle as string[]).includes(el)
+            ? (thisTitle as string[]).filter(element => element !== el)
+            : [...(thisTitle as string[]), el]
+      
+            setThisTitle(selected)
+            onChange(selected)
         }
     }
 
