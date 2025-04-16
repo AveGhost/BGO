@@ -23,7 +23,7 @@ const SinglePage = async ({params}: {params: {id: number}}) => {
             thumbnail,
             content,
             score,
-            gameTitle,
+            game,
             summaryContent,
             summaryTitle,
             plusList,
@@ -36,7 +36,7 @@ const SinglePage = async ({params}: {params: {id: number}}) => {
                     return <Article key={item.id} item={item} />
                 })}
                 <div className="col-2 max-w-[800px]">
-                    <SummaryCard rate={score} gameTitle={gameTitle} summaryContent={summaryContent} summaryTitle={summaryTitle} />
+                    <SummaryCard rate={score} gameTitle={game.title} summaryContent={summaryContent} summaryTitle={summaryTitle} />
                     <RatingTable pluses={plusList} minuses={minusList} />
                     <div className="bg-zinc-800 rounded-lg">
                         <AuthorCard classes="grid grid-cols-[auto_1fr]" avatar="/avatar.png" name={author.firstName} role={author.userRole} description="Specjalista od Groznawstwa, który nie stroni od swoich ulubionych tytułów. Rzadko się do tego przyznaje, ale ma prawie 2000 godzin na liczniku w Path of Exile. Pozostałe dwa tytuły w jego świętej trójcy to Assassin’s Creed: Origins oraz Final Fantasy XV. Miłośnik RPG i hack’n’slash, dla którego najważniejsza jest dobra historia, a ściany tekstu są plusem. Po godzinach pisze do szuflady, pije niepokojąco duże ilości kawy i często wraca do swoich ulubionych seriali (o Hannibalu prawdopodobnie gadałby nawet w trumnie)."/>
