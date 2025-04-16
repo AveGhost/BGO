@@ -6,6 +6,7 @@ interface HeroProps {
     publishDate: string
     author: {
         firstName: string
+        lastName?: string
     }
     image: string
 }
@@ -16,7 +17,7 @@ const Hero = ({title, publishDate, author, image}: HeroProps) => {
                 <h1 className="text-6xl mb-2 max-w-[800px] font-medium">{title}</h1>
                 <div className="flex flex-col text-sm">
                     <span className="text-zinc-400">Opublikowano: <strong><Date date={publishDate} /></strong></span>
-                    <span className="text-zinc-400">Autor: <strong>{author.firstName}</strong></span>
+                    <span className="text-zinc-400">Autor: <strong>{author.firstName} {author.lastName && author.lastName}</strong></span>
                 </div>
             </div>
             <div className="relative w-[1200px] h-[650px] my-4 col-2">
