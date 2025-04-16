@@ -13,17 +13,25 @@ const TableListWrapper = () => {
 
     const handleSearchResults = (data: GameSearchResults) => {
         setResults(data);
+        if(data.page.size === 0) {
+            fetchGames()
+        }
+    }
+
+    const fetchGames = async () => {
+        setIsLoading(true)
+        const data = await getGames()
+        if(data.content.length === 0) {
+            setIsLoading(false)
+            return
+        }
+        setResults(data)
+        setIsLoading(false)
     }
 
     useEffect(() => {
-        const fetchGames = async () => {
-            setIsLoading(true)
-            const data = await getGames()
-            setResults(data)
-            setIsLoading(false)
-        }
-        if(results.content.length === 0) fetchGames()
-    },[results])
+        fetchGames()
+    },[])
 
     return (
         <div className="border-1 border-zinc-600 w-full p-4 rounded-lg absolute left-0 max-w-[350px]">
