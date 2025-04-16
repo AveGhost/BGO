@@ -1,6 +1,5 @@
 'use client'
 
-import getGames from "@/utils/games/GetGame"
 import getNews from "@/utils/news/GetNews"
 import editNews from "@/utils/news/EditNews"
 import { useEffect, useState, useContext } from "react"
@@ -24,8 +23,11 @@ import { PostFormData } from "@/types/PostFormData"
 import { redirect } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import toast from "react-hot-toast"
-import { GameSearchResults } from "@/types/GameSearchResults"
 import Loading from "./loading"
+import SearchBox from "../ui/search-box/search-box.component"
+import SelectedGame from "../ui/add-edit-post/selected-game.component"
+import { moveFieldDown, moveFieldUp } from "@/mixins/moveField"
+import OrderHandler from "../ui/add-edit-post/order-handler.component"
 
 interface GameProps {
     title: string
@@ -39,7 +41,6 @@ const EditPostWrapper = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [postAuthorId, setPostAuthorId] = useState<number>(0)
     const [currentPostGameId, setCurrentPostGameId] = useState<number>(0)
-    const [searchResults, setSearchResults] = useState<GameSearchResults>({content: [], page: {size: 0, totalElements: 0, totalPages: 0, number: 0}})
     const [existingNews, setExistingNews] = useState<PostFormData>({
         title: "",
         thumbnail: "",
@@ -54,14 +55,12 @@ const EditPostWrapper = () => {
         author_id: postAuthorId,
         game_id: currentPostGameId
     })
-    const [games, setGames] = useState<GameProps[]>([])
     const [previewThumbnail, setPreviewThumbnail] = useState<string | undefined>(undefined)
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = useState<string | undefined>(undefined)
     const [teaser, setTeaser] = useState<string>("")
     const [content, setContent] = useState<Field[]>([])
     const [reviewTitle, setReviewTitle] = useState("")
     const [score, setScore] = useState(0)
-    const [isOpen, setIsOpen] = useState(false)
     const [selectedGame, setSelectedGame] = useState<GameProps>({
         title: "Wybierz gre",
         id: 0
@@ -90,7 +89,10 @@ const EditPostWrapper = () => {
     const handleAddField = addField(setContent);
     const handleUpdateField = updateField(setContent);
     const handleDeleteField = deleteField(setContent);
+    const handleMoveFieldUp = moveFieldUp(setContent);
+    const handleMoveFieldDown = moveFieldDown(setContent);
 
+    console.log(content)
     const addPlus = () => {
         setPlusList([...plusList, plus])
         setPlus("")
@@ -109,34 +111,13 @@ const EditPostWrapper = () => {
         setMinusList(prevMinusList => prevMinusList.filter((_, index) => index !== id))
     }
 
-    const toggleSelect = () => {
-        setIsOpen(!isOpen)
+    const removeGame = () => {
+        setSelectedGame({ title: "", id: 0 })
     }
 
     const chooseGame = (game: string, id?: number) => {
         setSelectedGame({ title: game , id: id ?? 0 })
-        setIsOpen(false)
     }
-
-    useEffect(() => {
-        const fetchGames = async () => {
-            try {
-                const response = await getGames()
-                setGames(response.content)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchGames()
-    },[])
-
-    useEffect(() => {
-        if(searchResults.content.length > 0) {
-            setIsOpen(true)
-        } else {
-            setIsOpen(false)
-        }
-    },[searchResults])
 
     const getUpdatedFields = (original: any, updated: any, exclude: string[] = []) => {
         const changed: Record<string, any> = {};
@@ -186,6 +167,7 @@ const EditPostWrapper = () => {
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const updatedFormData = {
+            ...formData,
             title: reviewTitle,
             thumbnail: previewThumbnail ?? "",
             teaser: teaser,
@@ -248,69 +230,83 @@ const EditPostWrapper = () => {
                     </FormFile>
                 : <PreviewImage classes="w-[1200px] h-[650px]" previewImage={previewThumbnail} deleteImage={() => setPreviewThumbnail(undefined)}/>}
                 <FormTextArea value={teaser} placeholder="Wpisz podtytuł" name="teaser" event={(e) => setTeaser(e.target.value)} />
-                {content.map((field) => (
+                {content.map((field,index) => (
                     field.type === 'HEADING' ?
                     <PostFieldWrapper key={field.id} fieldId={field.id} deleteField={handleDeleteField}>
-                        <FormInput
-                            key={field.id}
-                            type="text"
-                            placeholder="Wpisz Nagłówek1"
-                            name={`${field.type}_${field.id}`}
-                            value={field.content}
-                            icon="material-symbols:title-rounded"
-                            event={(e) => handleUpdateField(field.id, e.target.value)}
-                        />
+                        <div className="flex items-center bg-zinc-900 p-4 rounded-lg">
+                            <OrderHandler moveDown={() => handleMoveFieldDown(index)} moveUp={() => handleMoveFieldUp(index)} />
+                            <FormInput
+                                key={field.id}
+                                type="text"
+                                placeholder="Wpisz Nagłówek"
+                                name={`${field.type}_${field.id}`}
+                                value={field.content}
+                                icon="material-symbols:title-rounded"
+                                event={(e) => handleUpdateField(field.id, e.target.value)}
+                            />
+                        </div>
                     </PostFieldWrapper>
                     : field.type === 'PARAGRAPH' ?
                     <PostFieldWrapper key={field.id} fieldId={field.id} deleteField={handleDeleteField}>
-                        <FormTextArea
-                            key={field.id}
-                            value={field.content}
-                            placeholder="Wpisz treść"
-                            name={`${field.type}_${field.id}`}
-                            event={(e) => handleUpdateField(field.id, e.target.value)}
-                        />
+                        <div className="flex items-center bg-zinc-900 p-4 rounded-lg">
+                            <OrderHandler moveDown={() => handleMoveFieldDown(index)} moveUp={() => handleMoveFieldUp(index)} />
+                            <FormTextArea
+                                key={field.id}
+                                value={field.content}
+                                placeholder="Wpisz treść"
+                                name={`${field.type}_${field.id}`}
+                                event={(e) => handleUpdateField(field.id, e.target.value)}
+                                classes="w-full"
+                            />
+                        </div>
                     </PostFieldWrapper>
                     :
                     <PostFieldWrapper key={field.id} fieldId={field.id} deleteField={handleDeleteField}>
-                        <div key={field.id} className="grid grid-cols-[180px_1fr]">
-                            <span className="place-content-end pr-3">
-                                <FormInput
-                                    type="text"
-                                    placeholder="Dodaj adnotacje"
+                        <div key={field.id} className="flex p-4 rounded-lg bg-zinc-900">
+                            <OrderHandler moveDown={() => handleMoveFieldDown(index)} moveUp={() => handleMoveFieldUp(index)} />
+                            <div className="flex flex-col w-full">
+                                {!field.content ?
+                                <FormFile
+                                    icon="material-symbols:upload-rounded"
+                                    id={field.id}
                                     name={`${field.type}_${field.id}`}
-                                    value={field.description ?? ""}
-                                    event={(e) => handleUpdateField(field.id, field.content, e.target.value)}
-                                />
-                            </span>
-                            {!field.content ?
-                            <FormFile
-                                icon="material-symbols:upload-rounded"
-                                id={field.id}
-                                name={`${field.type}_${field.id}`}
-                                event={(e) => handleFileSelect(e, undefined, field.id, setContent)}
-                                update={(e) => handleUpdateField(field.id, e.target.value)}
-                                handleDragOver={(e) => e.preventDefault()}
-                                handleDrop={(e) => handleDrop(e, undefined, field.id, setContent)}
-                            >
-                                <span className="text-sm text-zinc-400">Lub</span>
-                                <div className="grid grid-cols-[1fr_120px] gap-4 p-4 text-sm">
-                                    <FormInput icon="material-symbols:cloud-upload-rounded" type="text" placeholder="Wpisz link do obrazka" name="thumbnail_url" value={previewThumbnailUrl ?? ""} event={(e) => setPreviewThumbnailUrl(e.target.value)} />
-                                    <Button type="submit" text="Dodaj" event={[() => handleUpdateField(field.id, previewThumbnailUrl ?? ""), () => setPreviewThumbnailUrl("")]}/>
-                                </div>
-                            </FormFile>
-                            : 
-                            <PreviewImage
-                                previewImage={field.content}
-                                classes="w-full h-[400px] col-span-1"
-                                deleteImage={() => handleUpdateField(field.id, "")}
-                            />}
+                                    event={(e) => handleFileSelect(e, undefined, field.id, setContent)}
+                                    update={(e) => handleUpdateField(field.id, e.target.value)}
+                                    handleDragOver={(e) => e.preventDefault()}
+                                    handleDrop={(e) => handleDrop(e, undefined, field.id, setContent)}
+                                >
+                                    <span className="text-sm text-zinc-400">Lub</span>
+                                    <div className="grid grid-cols-[1fr_120px] gap-4 p-4 text-sm">
+                                        <FormInput icon="material-symbols:cloud-upload-rounded" type="text" placeholder="Wpisz link do obrazka" name="thumbnail_url" value={previewThumbnailUrl ?? ""} event={(e) => setPreviewThumbnailUrl(e.target.value)} />
+                                        <Button type="submit" text="Dodaj" event={[() => handleUpdateField(field.id, previewThumbnailUrl ?? ""), () => setPreviewThumbnailUrl("")]}/>
+                                    </div>
+                                </FormFile>
+                                : 
+                                <PreviewImage
+                                    previewImage={field.content}
+                                    classes="w-full h-[650px] col-span-1"
+                                    deleteImage={() => handleUpdateField(field.id, "")}
+                                />}
+                                <span className="w-full mt-4">
+                                    <FormInput
+                                        type="text"
+                                        placeholder="Dodaj adnotacje"
+                                        name={`${field.type}_${field.id}`}
+                                        value={field.description ?? ""}
+                                        event={(e) => handleUpdateField(field.id, field.content, e.target.value)}
+                                    />
+                                </span>
+                            </div>
                         </div>
                     </PostFieldWrapper>
                 ))}
                 <AddFieldButtons addField={handleAddField} />
                 <SetSummaryCardWrapper score={score} setScore={setScore}>
-                    {/* <FormSearchSelect isOpen={isOpen} elements={searchResults.content.map(game => game)} singleSelect={chooseGame} onClick={toggleSelect} searchResults={setSearchResults} icon="arcticons:rpg-simple-dice" choosen={selectedGame.title} deleteChoosen={() => setSelectedGame({ title: "", id: 0 })} /> */}
+                    {selectedGame.title ?
+                        <SelectedGame text={selectedGame.title} event={removeGame} />
+                    : 
+                        <SearchBox event={chooseGame} />
+                    }
                     <FormInput 
                         icon="material-symbols:title-rounded" 
                         type="text" 
@@ -326,8 +322,8 @@ const EditPostWrapper = () => {
                         event={(e) => setSummaryContent(e.target.value)} 
                     />
                 </SetSummaryCardWrapper>
-                <div className="flex justify-between my-8">
-                    <ul className="flex flex-col gap-4">
+                <div className="flex justify-between gap-8 my-8">
+                    <ul className="flex flex-col gap-4 w-full">
                         {plusList.map((plus, index) =>( 
                             <PostFieldWrapper key={index} fieldId={index} deleteField={removePlus} classes="flex items-center flex-row-reverse justify-between gap-2" iconClass="relative top-0 right-0">
                                 <RatingTableElement text={plus} icon="ic:round-plus" isPositive />
@@ -343,7 +339,7 @@ const EditPostWrapper = () => {
                         />
                         {plus && <Button type="button" text="Dodaj" event={() => addPlus()} />}
                     </ul>
-                    <ul className="flex flex-col gap-4">
+                    <ul className="flex flex-col gap-4 w-full">
                         {minusList.map((minus, index) =>(
                             <PostFieldWrapper key={index} fieldId={index} deleteField={removeMinus} classes="flex items-center flex-row-reverse justify-between gap-2" iconClass="relative top-0 right-0">
                                 <RatingTableElement text={minus} icon="ic:round-minus" isPositive={false} />
@@ -360,7 +356,7 @@ const EditPostWrapper = () => {
                         {minus && <Button type="button" text="Dodaj" event={() => addMinus()} />}
                     </ul>
                 </div>
-                <Button type="submit" text="Zapisz i opublikuj" classes="bg-green-800" />
+                <Button type="submit" text="Zapisz i opublikuj" backgroundColor="bg-sky-800" />
             </FormWrapper>
         }
         </>

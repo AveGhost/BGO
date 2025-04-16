@@ -1,7 +1,8 @@
 'use client'
 
 import postNews from "@/utils/news/PostNews"
-import { useState, useContext } from "react"
+import { searchGames } from "@/utils/games/SearchGames"
+import { useState, useContext, useEffect } from "react"
 import FormWrapper from "@/components/ui/form/form-wrapper.component"
 import FormInput from "@/components/ui/form/form-input.component"
 import FormFile from "@/components/ui/form/form-file/form-file.component"
@@ -23,6 +24,9 @@ import { redirect } from "next/navigation"
 import toast from "react-hot-toast"
 import SearchBox from "../ui/search-box/search-box.component"
 import SelectedGame from "../ui/add-edit-post/selected-game.component"
+import { useSearchParams } from "next/navigation"
+import { moveFieldDown, moveFieldUp } from "@/mixins/moveField"
+import OrderHandler from "../ui/add-edit-post/order-handler.component"
 
 interface GameProps {
     title: string
@@ -31,16 +35,18 @@ interface GameProps {
 
 const AddPostWrapper = () => {
     const user = useContext(AuthContext)?.user
+    const params = useSearchParams()
+    const game: GameProps = {
+        title: params?.get('title') ?? "",
+        id: parseInt(params?.get('id') ?? "0")
+    }
     const [previewThumbnail, setPreviewThumbnail] = useState<string | undefined>(undefined)
     const [previewThumbnailUrl, setPreviewThumbnailUrl] = useState<string | undefined>(undefined)
     const [teaser, setTeaser] = useState<string>("")
     const [content, setContent] = useState<Field[]>([])
     const [reviewTitle, setReviewTitle] = useState("")
     const [score, setScore] = useState(0)
-    const [selectedGame, setSelectedGame] = useState<GameProps>({
-        title: "",
-        id: 0
-    })
+    const [selectedGame, setSelectedGame] = useState<GameProps>(game)
     const [summaryTitle, setSummaryTitle] = useState("")
     const [summaryContent, setSummaryContent] = useState("")
     const [plusList, setPlusList] = useState<string[]>([])
@@ -65,6 +71,8 @@ const AddPostWrapper = () => {
     const handleAddField = addField(setContent);
     const handleUpdateField = updateField(setContent);
     const handleDeleteField = deleteField(setContent);
+    const handleMoveFieldUp = moveFieldUp(setContent);
+    const handleMoveFieldDown = moveFieldDown(setContent);
 
     const addPlus = () => {
         setPlusList([...plusList, plus])
@@ -92,7 +100,15 @@ const AddPostWrapper = () => {
         setSelectedGame({ title: "", id: 0 })
     }
 
-    console.log(selectedGame)
+    const FetchGame = async () => {
+        const data = await searchGames({ title: selectedGame.title })
+        setSelectedGame({ title: data.content[0].title, id: parseInt(data.content[0].id) })
+    }
+
+    useEffect(() => {
+        FetchGame()
+    },[])
+
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const updatedFormData = {
@@ -144,36 +160,42 @@ const AddPostWrapper = () => {
                     </div>
                 </FormFile>
             : <PreviewImage classes="w-[1200px] h-[650px]" previewImage={previewThumbnail} deleteImage={() => setPreviewThumbnail(undefined)}/>}
-            <FormTextArea value={teaser} placeholder="Wpisz podtytuł" name="teaser" event={(e) => setTeaser(e.target.value)} />
-            {content.map((field) => (
+            <FormTextArea value={teaser} placeholder="Krótka zajawka..." name="teaser" event={(e) => setTeaser(e.target.value)} />
+            {content.map((field,index) => (
                 field.type === 'HEADING' ?
                 <PostFieldWrapper key={field.id} fieldId={field.id} deleteField={handleDeleteField}>
-                    <FormInput
-                        key={field.id}
-                        type="text"
-                        placeholder="Wpisz Nagłówek"
-                        name={`${field.type}_${field.id}`}
-                        value={field.content}
-                        icon="material-symbols:title-rounded"
-                        event={(e) => handleUpdateField(field.id, e.target.value)}
-                        classes="bg-zinc-900 p-4 rounded-lg"
-                        iconClasses="right-6"
-                    />
+                    <div className="flex items-center bg-zinc-900 p-4 rounded-lg">
+                        <OrderHandler moveDown={() => handleMoveFieldDown(index)} moveUp={() => handleMoveFieldUp(index)} />
+                        <FormInput
+                            key={field.id}
+                            type="text"
+                            placeholder="Wpisz Nagłówek"
+                            name={`${field.type}_${field.id}`}
+                            value={field.content}
+                            icon="material-symbols:title-rounded"
+                            event={(e) => handleUpdateField(field.id, e.target.value)}
+                        />
+                    </div>
                 </PostFieldWrapper>
                 : field.type === 'PARAGRAPH' ?
                 <PostFieldWrapper key={field.id} fieldId={field.id} deleteField={handleDeleteField}>
-                    <FormTextArea
-                        key={field.id}
-                        value={field.content}
-                        placeholder="Wpisz treść"
-                        name={`${field.type}_${field.id}`}
-                        event={(e) => handleUpdateField(field.id, e.target.value)}
-                        classes="bg-zinc-900 p-4 rounded-lg"
-                    />
+                    <div className="flex items-center bg-zinc-900 p-4 rounded-lg">
+                        <OrderHandler moveDown={() => handleMoveFieldDown(index)} moveUp={() => handleMoveFieldUp(index)} />
+                        <FormTextArea
+                            key={field.id}
+                            value={field.content}
+                            placeholder="Wpisz treść"
+                            name={`${field.type}_${field.id}`}
+                            event={(e) => handleUpdateField(field.id, e.target.value)}
+                            classes="w-full"
+                        />
+                    </div>
                 </PostFieldWrapper>
                 :
                 <PostFieldWrapper key={field.id} fieldId={field.id} deleteField={handleDeleteField}>
-                    <div key={field.id} className="flex flex-col p-4 rounded-lg bg-zinc-900">
+                <div key={field.id} className="flex p-4 rounded-lg bg-zinc-900">
+                    <OrderHandler moveDown={() => handleMoveFieldDown(index)} moveUp={() => handleMoveFieldUp(index)} />
+                    <div className="flex flex-col w-full">
                         {!field.content ?
                         <FormFile
                             icon="material-symbols:upload-rounded"
@@ -206,7 +228,8 @@ const AddPostWrapper = () => {
                             />
                         </span>
                     </div>
-                </PostFieldWrapper>
+                </div>
+            </PostFieldWrapper>
             ))}
             <AddFieldButtons addField={handleAddField} />
             <SetSummaryCardWrapper score={score} setScore={setScore}>
@@ -225,7 +248,7 @@ const AddPostWrapper = () => {
                 />
                 <FormTextArea 
                     value={summaryContent} 
-                    placeholder="Wpisz podtytuł" 
+                    placeholder="Wpisz treść podsumowania" 
                     name="summary_content" 
                     event={(e) => setSummaryContent(e.target.value)} 
                 />
@@ -264,7 +287,7 @@ const AddPostWrapper = () => {
                     {minus && <Button type="button" text="Dodaj" event={() => addMinus()} />}
                 </ul>
             </div>
-            <Button type="submit" text="Dodaj recenzje" classes="bg-green-800" />
+            <Button type="submit" text="Dodaj recenzje" backgroundColor="bg-sky-800" />
         </FormWrapper>
     )
 }
