@@ -37,7 +37,7 @@ const AddGameWrapper = () => {
             })
 
             setTimeout(() => {
-                redirect('/dashboard/add-post')
+                redirect(`/dashboard/add-post?title=${formData.title}`)
             }, 500)
         } catch (err) {}
     }
