@@ -15,7 +15,6 @@ interface UserInfoProps {
 
 const UserInfo = ({user}: UserInfoProps) => {
     const [openDropDown, setOpenDropDown] = useState(false)
-
     const toggleDropDown = () => {
         setOpenDropDown(!openDropDown)
     }
