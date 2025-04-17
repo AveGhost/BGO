@@ -3,7 +3,6 @@ import HomeLayoutProvider from "../context/HomeLayoutProvider";
 import getNewsAll from "@/utils/news/GetNewsAll";
 import { newsTypes } from "@/types/NewsTypes";
 import { pageTypes } from "@/types/PageTypes";
-import Pagination from "@/components/ui/pagination/pagination.component";
 
 interface responseTypes {
     content: newsTypes[]
@@ -11,11 +10,10 @@ interface responseTypes {
 }
 
 export default async function Home() {
-  const news: responseTypes = await getNewsAll();
+  const news: responseTypes = await getNewsAll({page: 1});
   return (
     <HomeLayoutProvider>
-      <ListingWrapper posts={news} />
-      <Pagination pagesNumber={news.page.totalPages} />
+      <ListingWrapper posts={news} page={1} />
     </HomeLayoutProvider>
   )
 }
