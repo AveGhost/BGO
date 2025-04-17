@@ -1,24 +1,14 @@
 'use client'
 
-import { createContext, useLayoutEffect, useEffect, useState, use } from "react";
+import { createContext, useLayoutEffect, useEffect, useState, } from "react";
 import api from "../api/api";
 import useLocalStorageState from "use-local-storage-state";
-
+import { User } from "@/types/UserTypes";
 interface AuthContext {
     token: string | null
     setToken: (token: string | null) => void
     user: User | null
     setUser: (user: User | null) => void
-}
-
-interface User {
-    id: number
-    email: string
-    bio: string
-    createdAt: string
-    firstName: string
-    lastName: string
-    userRole: string
 }
 
 export const AuthContext = createContext<AuthContext | null>(null);
