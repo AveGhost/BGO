@@ -13,7 +13,7 @@ const AuthorAvatar = ({avatar}: {avatar: string}) => {
             />
         </div>
         :
-        <Icon icon="material-symbols:person-outline-rounded" width="48" height="48" className="rounded-full" />
+        <Icon icon="qlementine-icons:user-24" width="48" height="48" className="rounded-full" />
     )
 }
 
