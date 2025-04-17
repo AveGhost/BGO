@@ -1,10 +1,10 @@
 import api from "@/api/api";
 
-export default async function getNewsAll({page}: {page?: number} = {}) {
+export default async function getNewsAll({page}: {page?: number,} = {}) {
     try {
         const response = await api.get(`/news`, {
             params:{
-                page: page
+                page: page,
             }
         });
         return response.data;
