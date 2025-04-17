@@ -27,6 +27,7 @@ import SelectedGame from "../ui/add-edit-post/selected-game.component"
 import { useSearchParams } from "next/navigation"
 import { moveFieldDown, moveFieldUp } from "@/mixins/moveField"
 import OrderHandler from "../ui/add-edit-post/order-handler.component"
+import UploadImage from "../ui/add-edit-post/upload-image.component"
 
 interface GameProps {
     title: string
@@ -145,20 +146,7 @@ const AddPostWrapper = () => {
         <FormWrapper onSubmit={handleFormSubmit}>
             <FormInput icon="material-symbols:title-rounded" type="text" placeholder="Wpisz tytuł recenzji" name="title" value={reviewTitle} event={(e) => setReviewTitle(e.target.value)} />
             {!previewThumbnail ?
-                <FormFile 
-                    icon="material-symbols:upload-rounded"
-                    id="image" 
-                    name="image" 
-                    event={(e) => handleFileSelect(e, setPreviewThumbnail)} 
-                    handleDragOver={(e) => handleDragOver(e)} 
-                    handleDrop={(e) => handleDrop(e, setPreviewThumbnail)}
-                >
-                    <span className="text-sm text-zinc-400">Lub</span>
-                    <div className="grid grid-cols-[1fr_120px] gap-4 p-4 text-sm">
-                        <FormInput icon="material-symbols:cloud-upload-rounded" type="text" placeholder="Wpisz link do obrazka" name="thumbnail_url" value={previewThumbnailUrl ?? ""} event={(e) => setPreviewThumbnailUrl(e.target.value)} />
-                        <Button type="button" text="Dodaj" event={[() => setPreviewThumbnail(previewThumbnailUrl),() => setPreviewThumbnailUrl("")]}/>
-                    </div>
-                </FormFile>
+            <UploadImage setPreviewThumbnail={setPreviewThumbnail} previewThumbnailUrl={previewThumbnailUrl} setPreviewThumbnailUrl={setPreviewThumbnailUrl} height="min-h-[300px]"/>
             : <PreviewImage classes="w-[1200px] h-[650px]" previewImage={previewThumbnail} deleteImage={() => setPreviewThumbnail(undefined)}/>}
             <FormTextArea value={teaser} placeholder="Krótka zajawka..." name="teaser" event={(e) => setTeaser(e.target.value)} />
             {content.map((field,index) => (
