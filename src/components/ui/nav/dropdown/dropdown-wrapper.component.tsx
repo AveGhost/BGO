@@ -12,7 +12,7 @@ const DropDownWrapper = ({role, toggleDropDown}: DropDownWrapperProps) => {
             <DropDownElement url="/dashboard/add-game" name="Dodaj recencje" icon="ic:round-post-add" onClick={toggleDropDown} />
             <DropDownElement url="/dashboard/my-posts" name="Twoje posty" icon="dashicons:admin-post" onClick={toggleDropDown} />
             {role === 'ADMINISTRATOR' ? <DropDownElement url="/" name="Wszystkie posty" icon="ic:round-all-inbox" onClick={toggleDropDown} /> : null}
-            <DropDownElement url="/" name="Edytuj profil" icon="carbon:settings" onClick={toggleDropDown} />
+            <DropDownElement url="/dashboard/edit-profile" name="Edytuj profil" icon="carbon:settings" onClick={toggleDropDown} />
             <DropDownElement url="/" name="Wyloguj" icon="hugeicons:logout-04" onClick={logout} />
         </div>
     )
