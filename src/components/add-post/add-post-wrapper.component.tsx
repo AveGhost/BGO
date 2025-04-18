@@ -102,6 +102,7 @@ const AddPostWrapper = () => {
     }
 
     const FetchGame = async () => {
+        if(selectedGame.title === "") return
         const data = await searchGames({ title: selectedGame.title })
         setSelectedGame({ title: data.content[0].title, id: parseInt(data.content[0].id) })
     }
@@ -141,7 +142,6 @@ const AddPostWrapper = () => {
             },500)
         } catch (error) {}
     }
-
     return (
         <FormWrapper onSubmit={handleFormSubmit}>
             <FormInput icon="material-symbols:title-rounded" type="text" placeholder="Wpisz tytuł recenzji" name="title" value={reviewTitle} event={(e) => setReviewTitle(e.target.value)} />
