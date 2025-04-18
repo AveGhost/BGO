@@ -9,6 +9,7 @@ interface AuthContext {
     setToken: (token: string | null) => void
     user: User | null
     setUser: (user: User | null) => void
+    isFetching: boolean
 }
 
 export const AuthContext = createContext<AuthContext | null>(null);
@@ -16,7 +17,7 @@ export const AuthContext = createContext<AuthContext | null>(null);
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [token, setToken] = useLocalStorageState<string | null>('token', {defaultValue: null});
     const [user, setUser] = useState<User | null>(null);
-
+    const [isFetching, setIsFetching] = useState(true);
     useEffect(() => {
         const fetchMe = async () => {
             if(!token) return;
@@ -26,6 +27,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             } catch (error) {
                 console.error(error);
                 setUser(null);
+            } finally {
+                setIsFetching(false);
             }
         }
 
@@ -68,7 +71,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     },[])
 
     return (
-        <AuthContext.Provider value={{ token, setToken, user, setUser }}>
+        <AuthContext.Provider value={{ token, setToken, user, setUser, isFetching }}>
             {children}
         </AuthContext.Provider>
     )
