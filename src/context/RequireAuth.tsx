@@ -15,8 +15,6 @@ const RequireAuth = ({ children, role }: RequireAuthProps) => {
     const router = useRouter();
     useEffect(() => {
         if(isFetching) return
-        console.log(user)
-        console.log(token)
         if (!token || !user) {
             router.replace("/login");
         } else if (role && user.userRole !== role) {
