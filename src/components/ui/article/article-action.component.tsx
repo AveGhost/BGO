@@ -5,11 +5,12 @@ import LinkButton from "../link-button/link-button.component"
 import Popup from "../popup/popup.component"
 import { AuthContext } from "@/context/AuthProvider"
 import { useState, useContext } from "react"
+import { Roles } from "@/types/RoleTypes"
 const ArticleAction = ({pageId}: {pageId: number}) => {
     const [isOpen, setIsOpen] = useState(false)
     const {user} = useContext(AuthContext)!
 
-    if(user?.userRole !== "ADMINISTRATOR" && user?.userRole !== "EDITOR") return
+    if(user?.userRole !== Roles.ADMINISTRATOR && user?.userRole !== Roles.EDITOR) return
     
     return (
         <>
