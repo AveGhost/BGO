@@ -1,11 +1,15 @@
 import Steps from "@/components/ui/add-edit-post/steps.component"
 import AddPostWrapper from "@/components/add-post/add-post-wrapper.component"
+import RequireAuth from "@/context/RequireAuth"
+import { Roles } from "@/types/RoleTypes"
 const AddPost = () => {
     return (
-        <div className="container max-w-[1200px] mx-auto py-6">
-            <Steps />
-            <AddPostWrapper />
-        </div>
+        <RequireAuth role={Roles.ADMINISTRATOR || Roles.EDITOR}>
+            <div className="container max-w-[1200px] mx-auto py-6">
+                <Steps />
+                <AddPostWrapper />
+            </div>
+        </RequireAuth>
     )
 }
 
