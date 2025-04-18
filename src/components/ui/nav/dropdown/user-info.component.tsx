@@ -5,11 +5,11 @@ import AuthorAvatar from "../../../author/author-avatar.component"
 import AuthorName from "../../../author/author-name.component"
 import DropDownWrapper from "./dropdown-wrapper.component"
 import { useState } from "react"
-
+import { Role } from "@/types/RoleTypes"
 interface UserInfoProps {
     user: {
         firstName: string
-        userRole: string
+        userRole: Role
         avatarUrl: string
     }
 }
