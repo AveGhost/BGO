@@ -5,7 +5,7 @@ const RatingTable = ({pluses, minuses}: {pluses: string[], minuses: string[]}) =
     const minusesArray = minuses
 
     return (
-        <div className="flex justify-between gap-8 my-8">
+        <div className="flex flex-wrap md:flex-nowrap justify-between gap-8 my-8">
             <ul className="flex flex-col w-full gap-4">
                 {plusesArray.map((plus, index) => <RatingTableElement key={index} text={plus} icon="ic:round-plus" isPositive />)}
             </ul>

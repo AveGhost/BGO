@@ -8,7 +8,7 @@ interface SetSummaryCardWrapperProps {
 
 const SetSummaryCardWrapper = ({ children, score, setScore }: SetSummaryCardWrapperProps) => {
     return (
-        <article className="py-4 px-8 bg-zinc-900 rounded-lg grid grid-cols-[1fr_250px] items-center my-8">
+        <article className="py-4 px-8 bg-zinc-900 rounded-lg grid grid-cols-1 gap-4 md:grid-cols-[1fr_250px] items-center my-8">
             <div className="flex flex-col gap-4">
                 {children}
             </div>

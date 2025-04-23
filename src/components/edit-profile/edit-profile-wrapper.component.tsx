@@ -63,16 +63,18 @@ const EditProfileWrapper = () => {
     if(!user) return <Loading />
 
     return (
-        <div className="form w-full max-w-[850px]">
-            <div className="flex flex-col gap-4 justify-center items-center h-full p-4">
+        <div className="form w-full max-w-[850px] h-full my-6">
+            <div className="flex flex-col gap-4 justify-center h-full items-center p-4">
                 <h1 className="text-2xl text-center mb-6">Twoje dane</h1>
                 <FormWrapper onSubmit={formSubmit}>
                     {avatar ? <PreviewImage imageRounded="rounded-full" classes="w-32 h-32 mx-auto" previewImage={avatar} deleteImage={() => setAvatar("")} /> 
                     :
                     <UploadImage setPreviewThumbnail={setAvatar} previewThumbnailUrl={avatarUrl} setPreviewThumbnailUrl={setAvatarUrl} height="min-h-[300px]"/>
                     }
-                    <FormInput icon="majesticons:user-line" type="text" placeholder="Imie" name="first_name" value={formData.first_name} event={handleInputChange} />
-                    <FormInput icon="majesticons:user-line" type="text" placeholder="Nazwisko" name="last_name" value={formData.last_name} event={handleInputChange}/>
+                    <div className="flex items-center gap-4">
+                        <FormInput icon="majesticons:user-line" type="text" placeholder="Imie" name="first_name" value={formData.first_name} event={handleInputChange} />
+                        <FormInput icon="majesticons:user-line" type="text" placeholder="Nazwisko" name="last_name" value={formData.last_name} event={handleInputChange}/>
+                    </div>
                     <FormInput icon="carbon:email" type="email" placeholder="Adres e-mail" name="email" value={formData.email} event={handleInputChange}/>
                     <FormTextArea placeholder="O mnie" name="bio" value={formData.bio} event={handleInputChange}/>
                     <Button type="submit" text="Zapisz dane" backgroundColor="bg-sky-800" />

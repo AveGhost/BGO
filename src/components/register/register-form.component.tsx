@@ -32,8 +32,8 @@ const RegisterForm = () => {
         } catch(err) {}
     }
     return (
-        <div className="form w-full max-w-[450px] min-h-[550px] p-4">
-            <div className="flex flex-col gap-4 justify-center items-center h-full">
+        <div className="form flex flex-col justify-center w-full max-w-[450px] min-h-[550px] p-4">
+            <div className="flex flex-col gap-4 justify-center items-center">
                 <h1 className="text-2xl text-center mb-6">Rejestracja</h1>
                 <FormWrapper onSubmit={formSubmit}>
                     <FormInput icon="majesticons:user-line" type="text" placeholder="Imie" name="first_name" value={formData.first_name} event={handleInputChange} />

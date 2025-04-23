@@ -34,7 +34,7 @@ const TableListWrapper = () => {
     },[])
 
     return (
-        <div className="border-1 border-zinc-600 w-full p-4 rounded-lg absolute left-0 max-w-[350px]">
+        <div className="border-1 border-zinc-600 row-1 mt-6 md:mt-0 w-full md:row-auto p-4 rounded-lg xl:absolute left-0 md:max-w-[350px]">
             <h2 className="text-2xl mb-4">Ostatnio dodane gry</h2>
             <SearchInput onSearchResults={handleSearchResults}  />
             {isLoading ? (

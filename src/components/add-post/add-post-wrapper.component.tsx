@@ -193,9 +193,10 @@ const AddPostWrapper = () => {
                             update={(e) => handleUpdateField(field.id, e.target.value)}
                             handleDragOver={(e) => e.preventDefault()}
                             handleDrop={(e) => handleDrop(e, undefined, field.id, setContent)}
+                            height="md:h-[650px] h-[300px]"
                         >
                             <span className="text-sm text-zinc-400">Lub</span>
-                            <div className="grid grid-cols-[1fr_120px] gap-4 p-4 text-sm">
+                            <div className="sm:grid sm:grid-cols-[1fr_120px] flex flex-col gap-4 p-4 text-sm">
                                 <FormInput icon="material-symbols:cloud-upload-rounded" type="text" placeholder="Wpisz link do obrazka" name="thumbnail_url" value={previewThumbnailUrl ?? ""} event={(e) => setPreviewThumbnailUrl(e.target.value)} />
                                 <Button type="submit" text="Dodaj" event={[() => handleUpdateField(field.id, previewThumbnailUrl ?? ""), () => setPreviewThumbnailUrl("")]}/>
                             </div>
@@ -203,7 +204,7 @@ const AddPostWrapper = () => {
                         : 
                         <PreviewImage
                             previewImage={field.content}
-                            classes="w-full h-[650px] col-span-1"
+                            classes="w-full h-[300px] md:h-[650px] col-span-1"
                             deleteImage={() => handleUpdateField(field.id, "")}
                         />}
                         <span className="w-full mt-4">

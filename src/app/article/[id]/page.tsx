@@ -29,9 +29,9 @@ const SinglePage = async ({params}: {params: {id: number}}) => {
             plusList,
             minusList } = news
     return (
-        <section className="py-6 container mx-auto">
+        <section className="py-6 container mx-auto px-4 xl:px-0">
             <Hero title={title} publishDate={publishDate} author={author} image={thumbnail} />
-            <div className="grid grid-cols-[180px_1fr]">
+            <div className="xl:grid xl:grid-cols-[180px_1fr]">
                 {content.map((item: ArticleItemProps) => {
                     return <Article key={item.id} item={item} />
                 })}

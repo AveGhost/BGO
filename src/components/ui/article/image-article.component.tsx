@@ -7,9 +7,9 @@ interface ImageReviewProps {
 
 const ImageReview = ({image,quote}: ImageReviewProps) => {
     return (
-        <div className="grid grid-cols-[180px_1fr] py-6 col-span-2">
-            <span className="text-[12px] pr-3 text-zinc-300 place-content-end">{quote}</span>
-            <div className="w-[840px] h-[450px] relative">
+        <div className="grid gap-4 xl:gap-0 xl:grid-cols-[180px_1fr] py-6 col-span-2">
+            <span className="text-[14px] pr-3 text-zinc-300 place-content-end row-2 xl:row-auto">{quote}</span>
+            <div className="lg:w-[840px] md:w-[720px] w-full h-[450px] relative">
                 <Image
                     src={image}
                     alt="review"

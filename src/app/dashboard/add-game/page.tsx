@@ -6,9 +6,8 @@ import { Roles } from "@/types/RoleTypes"
 const AddGame = () => {
     return (
         <RequireAuth role={Roles.ADMINISTRATOR || Roles.EDITOR}>
-            <div className="container mx-auto h-full grid place-items-center items-center grow relative">
-                <TableListWrapper />
-                <div className="flex flex-col">
+            <div className="container mx-auto gap-4 md:grid md:grid-cols-2 xl:flex xl:flex-col justify-center place-items-center grow relative py-6 px-4">
+                <div className="flex flex-col w-full xl:w-auto">
                     <Steps />
                     <div className="form w-full min-h-[350px] p-4">
                         <div className="flex flex-col gap-4 justify-center items-center h-full">
@@ -17,6 +16,7 @@ const AddGame = () => {
                         </div>
                     </div>
                 </div>
+                <TableListWrapper />
             </div>
         </RequireAuth>
     )

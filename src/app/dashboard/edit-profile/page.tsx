@@ -3,7 +3,7 @@ import RequireAuth from "@/context/RequireAuth"
 const EditProfile = () => {
     return (
         <RequireAuth>
-            <div className="container mx-auto h-full flex flex-col items-center justify-center grow py-6">
+            <div className="container mx-auto flex flex-col items-center justify-center grow px-4">
                 <EditProfileWrapper />
             </div>
         </RequireAuth>

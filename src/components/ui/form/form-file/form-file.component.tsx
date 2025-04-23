@@ -25,7 +25,7 @@ const FormFile = ({icon, event, handleDragOver, handleDrop, id, name, children, 
                     className="hidden"
                 />
                 <label htmlFor={id!.toString()} className="cursor-pointer p-4 flex flex-col justify-center items-center">
-                    {icon && <Icon icon={icon} width="96" height="96" className="text-zinc-400"/>}
+                    {icon && <Icon icon={icon} width="96" height="96" className="text-zinc-400 w-16 h-16 sm:w-24 sm:h-24"/>}
                     <span className="text-center text-sm text-zinc-400">Wybierz lub przeciągnij obrazek</span>
                 </label>
                 {children}

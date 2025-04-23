@@ -26,8 +26,8 @@ const Popup = ({ text, event, pageId }: PopupProps) => {
     }
 
     return (
-        <div className="fixed top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center w-full bg-zinc-900/60 z-70">
-            <div className="flex flex-col justify-center items-center w-[450px] h-[250px] bg-zinc-700 rounded-lg gap-6">
+        <div className="fixed top-0 bottom-0 left-0 right-0 m-auto p-4 flex items-center justify-center w-full bg-zinc-900/60 z-70">
+            <div className="flex flex-col justify-center items-center md:w-[450px] h-[250px] w-full bg-zinc-700 rounded-lg gap-6">
                 <h3 className="text-center text-3xl font-medium">Uwaga</h3>
                 <p>{text}</p>
                 <div className="flex justify-between items-center gap-4 w-full max-w-[250px]">

@@ -6,9 +6,9 @@ interface TableListProps {
 
 const TableList = ({elements}: TableListProps) => {
     return (
-        <ul className="flex flex-col gap-4 mt-4 px-2">
+        <ul className="flex flex-wrap md:flex-col gap-4 mt-4 px-2">
             {elements.content?.map(element => 
-            <li className="text-zinc-400 cursor-pointer hover:text-white transition-colors duration-300" key={element.id}>
+            <li className="text-zinc-400 text-sm md:text-base cursor-pointer hover:text-white transition-colors duration-300" key={element.id}>
                 <Link href={`/dashboard/add-post?id=${element.id}&title=${element.title}`}>{element.title}</Link>
             </li>)}
             {elements.content?.length === 0 && <li className="text-zinc-400">Nie znaleziono tytułu</li>}

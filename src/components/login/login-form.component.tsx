@@ -38,8 +38,8 @@ const LoginForm = () => {
         setFormData({email: '', password: ''})
     }
     return (
-        <div className="form w-full max-w-[450px] min-h-[350px] p-4">
-            <div className="flex flex-col gap-4 justify-center items-center h-full">
+        <div className="form flex flex-col justify-center w-full max-w-[450px] min-h-[350px] p-4">
+            <div className="flex flex-col gap-4 justify-center items-center">
                 <h1 className="text-2xl text-center mb-6">Logowanie</h1>
                 <FormWrapper onSubmit={formSubmit}>
                     <FormInput icon="majesticons:user-line" type="email" placeholder="Adres e-mail" name="email" value={formData.email} event={handleInputChange} />

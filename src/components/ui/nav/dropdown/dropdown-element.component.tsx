@@ -10,9 +10,11 @@ interface DropDownElementProps {
 
 const DropDownElement = ({ url, name, icon, onClick }: DropDownElementProps) => {
     return (
-        <Link href={url} className="flex items-center gap-4 cursor-pointer py-2 px-4 rounded-lg hover:text-zinc-300 hover:opacity-70 transition-all duration-300" onClick={onClick}>
-            <Icon icon={icon} width="20" height="20" /> {name}
-        </Link>
+        <li>
+            <Link href={url} className="flex items-center gap-4 cursor-pointer py-2 px-4 rounded-lg hover:text-zinc-300 hover:opacity-70 transition-all duration-300" onClick={onClick}>
+                <Icon icon={icon} width="20" height="20" /> {name}
+            </Link>
+        </li>
     )
 }
 

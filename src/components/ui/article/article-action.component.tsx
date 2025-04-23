@@ -14,9 +14,9 @@ const ArticleAction = ({pageId}: {pageId: number}) => {
     
     return (
         <>
-            <div className="fixed left-2 p-2 w-[200px] h-[200px] bottom-0 flex flex-col items-center justify-center gap-4">
-                <LinkButton text="Edytuj artykuł" href={`/dashboard/edit-post?id=${pageId}`} icon="tabler:edit" classes="text-sm" backgroundColor="bg-sky-600" />
-                <Button text="Usun artykuł" event={() => setIsOpen(true)} icon="material-symbols-light:delete-outline-rounded" classes="text-sm" backgroundColor="bg-rose-600" />
+            <div className="fixed left-0 p-2 w-[80px] h-[150px] md:w-[200px] md:h-[200px] bottom-0 flex flex-col items-center justify-center gap-4">
+                <LinkButton text="Edytuj artykuł" href={`/dashboard/edit-post?id=${pageId}`} icon="tabler:edit" classes="text-[0px] !rounded-full !w-12 h-12 !p-0 !gap-0 md:!w-full md:text-sm md:!gap-4 md:!px-4 md:!py-2 md:h-auto md:!rounded-lg" backgroundColor="bg-sky-600" />
+                <Button text="Usuń artykuł" event={() => setIsOpen(true)} icon="material-symbols-light:delete-outline-rounded" classes="text-[0px] !rounded-full !w-12 h-12 !p-0 !gap-0 md:!w-full md:text-sm md:!gap-4 md:!px-4 md:!py-2 md:h-auto md:!rounded-lg" backgroundColor="bg-rose-600" />
             </div>
             {isOpen && <Popup text="Czy na pewno chcesz usunąć artykuł?" event={() => setIsOpen(false)} pageId={pageId} />}
         </>
