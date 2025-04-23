@@ -5,13 +5,9 @@ import AuthorAvatar from "../../../author/author-avatar.component"
 import AuthorName from "../../../author/author-name.component"
 import DropDownWrapper from "./dropdown-wrapper.component"
 import { useState } from "react"
-import { Role } from "@/types/RoleTypes"
+import { User } from "@/types/UserTypes"
 interface UserInfoProps {
-    user: {
-        firstName: string
-        userRole: Role
-        avatarUrl: string
-    }
+    user: User
 }
 
 const UserInfo = ({user}: UserInfoProps) => {
@@ -22,10 +18,10 @@ const UserInfo = ({user}: UserInfoProps) => {
 
     return (
         <div className="md:flex gap-4 items-center hidden relative">
-            <AuthorAvatar avatar={user.avatarUrl} />
+            <AuthorAvatar avatar={user.avatarUrl!} />
             <AuthorName name={user.firstName} />
             <Icon icon="material-symbols-light:arrow-drop-down" width="24" height="24" className={`cursor-pointer ${openDropDown ? "rotate-180" : "rotate-0"}`} onClick={toggleDropDown} />
-            {openDropDown && <DropDownWrapper role={user.userRole} toggleDropDown={toggleDropDown} />}
+            {openDropDown && <DropDownWrapper role={user.userRole!} toggleDropDown={toggleDropDown} />}
         </div>
     )
 }
