@@ -2,7 +2,7 @@
 
 import Logo from "../ui/logo/logo.component"
 import { Icon } from "@iconify/react/dist/iconify.js"
-import { useState, useEffect, useContext } from "react"
+import { useState, useContext } from "react"
 import { AuthContext } from "@/context/AuthProvider"
 import NavButtons from "../ui/nav/nav-buttons.component"
 import NavList from "../ui/nav/nav-list.component"
@@ -29,7 +29,6 @@ const Navigation = () => {
         }
     ]
 
-    const [scroll, setScroll] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const user = useContext(AuthContext)?.user
 
@@ -37,14 +36,8 @@ const Navigation = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen)
     }
 
-    useEffect(() => {
-        window.addEventListener('scroll', () => {
-            setScroll(window.scrollY > 130)
-        })
-    },[])
-
     return (
-        <nav className={`bg-zinc-800 p-3 z-50 w-full ${scroll ? "sticky-nav" : ""}`}>
+        <nav className="bg-zinc-800 p-3 z-50 w-full sticky top-0">
             <div className="container mx-auto flex justify-between items-center">
                 <Logo />
                 <NavList links={links} classes="md:flex hidden" />
