@@ -4,6 +4,8 @@ import "./globals.css";
 import Navigation from "../components/navigation/navigation.component";
 import AuthProvider from "../context/AuthProvider";
 import { Toaster } from "react-hot-toast";
+import InfoProvider from "@/context/InfoProvider";
+import InfoBox from "@/components/ui/info-box/info-box.component";
 
 const rubik = Rubik({
   variable: "--font-rubik",
@@ -25,11 +27,14 @@ export default function RootLayout({
       <body
         className={`${rubik.variable} antialiased`}
       >
-        <AuthProvider>
-            <Toaster position="top-center" reverseOrder={false} toastOptions={{style: {background: '#27272a', color: '#fff',border: '1px solid #9f9fa9'}}} />
-            <Navigation />
-            {children}
-        </AuthProvider>
+        <InfoProvider>
+          <AuthProvider>
+              <Toaster position="top-center" reverseOrder={false} toastOptions={{style: {background: '#27272a', color: '#fff',border: '1px solid #9f9fa9'}}} />
+              <Navigation />
+              {children}
+          </AuthProvider>
+          <InfoBox />
+        </InfoProvider>
       </body>
     </html>
   );
