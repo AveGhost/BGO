@@ -3,6 +3,9 @@ This is portal about games for now there are only review post but in the future 
 
 ***All articles presented on this website have been sourced from PlanetaGracza.pl and remain the property of their original authors. The purpose of sharing this material is for educational use and to showcase examples of journalistic publications related to the gaming industry.**
 
+# Api
+How to start working with API are in BGO-api folder
+
 ## Screenshots
 ![image](https://github.com/user-attachments/assets/27a5a0ab-0d0b-4f23-aebb-0061e7103641)
 ![image](https://github.com/user-attachments/assets/a255eaef-9c4c-4b0d-a898-ecdd4ba966ff)
