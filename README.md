@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## BGO
+This is portal about games for now there are only review post but in the future it will be more.
 
-## Getting Started
+***All articles presented on this website have been sourced from PlanetaGracza.pl and remain the property of their original authors. The purpose of sharing this material is for educational use and to showcase examples of journalistic publications related to the gaming industry.**
 
-First, run the development server:
+## Screenshots
+![image](https://github.com/user-attachments/assets/27a5a0ab-0d0b-4f23-aebb-0061e7103641)
+![image](https://github.com/user-attachments/assets/a255eaef-9c4c-4b0d-a898-ecdd4ba966ff)
+![image](https://github.com/user-attachments/assets/f0798ebe-38a4-4a9d-b471-5312ae58e53f)
+![image](https://github.com/user-attachments/assets/59f9739b-1b13-4c35-80f5-6d7a2c3559ff)
+![image](https://github.com/user-attachments/assets/7119e72f-18f6-42f7-8ae0-84b9e7efe93e)
+![image](https://github.com/user-attachments/assets/8ac04a13-7724-4b07-8d75-21cc2d71e98c)
+![image](https://github.com/user-attachments/assets/88bf20b1-ee97-4363-92a7-29c6f33f213b)
+![image](https://github.com/user-attachments/assets/14f8b54a-411e-4a4b-95da-3b3bcdf93a9d)
+![image](https://github.com/user-attachments/assets/832866b9-2188-4515-9841-f6e42b49cfb8)
+
+
+## Libs
+- react 18
+- tailwindcss
+- localstoragestate
+- iconify
+- Nextjs 15
+- Skeleton
+- dayjs
+
+# Installation
+
+Look at the [react documentation](https://react.dev/learn) to learn more.
+
+## Setup
+
+Make sure to install the dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# npm
+npm install
+
+# pnpm
+pnpm install
+
+# yarn
+yarn install
+
+# bun
+bun install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development Server
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Start the development server on `http://localhost:3000`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# npm
+npm run dev
 
-## Learn More
+# pnpm
+pnpm run dev
 
-To learn more about Next.js, take a look at the following resources:
+# yarn
+yarn dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# bun
+bun run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Production
 
-## Deploy on Vercel
+Build the application for production:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# npm
+npm run build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# pnpm
+pnpm run build
+
+# yarn
+yarn build
+
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm run preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
