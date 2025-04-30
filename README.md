@@ -1,6 +1,8 @@
 ## BGO
 This is portal about games for now there are only review post but in the future it will be more.
 
+if you wanna just see the page w/o functionality: https://bettergamesonline.netlify.app
+
 ***All articles presented on this website have been sourced from PlanetaGracza.pl and remain the property of their original authors. The purpose of sharing this material is for educational use and to showcase examples of journalistic publications related to the gaming industry.**
 
 # Api
